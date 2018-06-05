@@ -6,8 +6,9 @@ public class Shoot extends GameObject
     private static final int SIZEY = 20;
     private static final float SPEED = 4f;
     private String type;
+    private int dmg;
     
-    public Shoot (float x , float y, String type, int dmg)
+    public Shoot (float x , float y, String type)
     {
         this.x = x;
         this.y = y;
@@ -15,7 +16,7 @@ public class Shoot extends GameObject
         this.sy = SIZEY;
         this.type=type;
         this.life =1;
-        this.dmg = dmg;
+        this.dmg = 1;
     }
     
     

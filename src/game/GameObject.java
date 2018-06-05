@@ -11,58 +11,47 @@ public abstract class GameObject {
     protected float sx;
     protected float sy;
     protected int life;
-    protected int dmg;
+    
     abstract void update();
     
-    public void render()
-    {
-
-        Draw.rect(x,y,sx,sy);
+    public void render(){
+        Draw.rect(x,y,sx,sy,1f,1f,1f);
     }
     
-    public float getX ()
-    {
+    public float getX (){
         return x;
     }
     
-    public float getY()
-    {
+    public float getY(){
         return y;
     }
     
-    public float getSX()
-    {
+    public float getSX(){
         return sx;
     }
     
-    public float getSY()
-    {
+    public float getSY(){
         return sy;
     }
     
-    public float getCenterY()
-    {
+    public float getCenterY(){
         return y + sy/2;
      
     }
-    public float getCenterX()
-    {
+    public float getCenterX(){
         return x + sx/2;
     }
-    public int getLife()
-    {
+    public int getLife(){
         return life;
     }
 
-    public void addLife(int mag)
-    {
+    public void addLife(int mag){
         life += mag;
     }
-    public int getDmg()
-    {
-        return dmg;
+    
+    public void minusLife(){
+        life -=1;
     }
-
 
     
     

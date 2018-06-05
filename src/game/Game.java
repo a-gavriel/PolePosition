@@ -15,8 +15,9 @@ import java.util.TimerTask;
  * @author Alexis
  */
 public class Game {    
-     
-    public static Heroe player = new Heroe( "nombre", 3, Display.getWidth()*1/2,0);
+    public static int size = Map.size;
+    public static Map map = new Map();
+    public static Player player = new Player( "nombre", 3, 150*size,(168-100)*size);
       
     private int milis =0;
     ListaDoble proyectiles =new ListaDoble();
@@ -97,7 +98,7 @@ public class Game {
         if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)){         	
         	if( bandera ) {
                     //Shoot disparo;
-                    Shoot disparo = new Shoot(player.getX()+player.getSX()/2,player.getY()+player.getSY(),"heroe", player.getDmg());
+                    Shoot disparo = new Shoot(player.getX()+player.getSX()/2,player.getY()+player.getSY(),"heroe");
                     proyectiles.insertFirst(disparo);
                     bandera = false;                
                 }
@@ -106,16 +107,11 @@ public class Game {
     
     public void update(){        
         player.update();      
-        if (player.getLife() <= 0){
-            if (!(player.getheart() <= 0)){
-                System.out.println("dead");
-                player.addLife(50);
-                player.addLife(-1);
-            }
-            else{
-                System.out.println("defeat");
-            }
+        if (player.getLife() <= 0){                
+            //System.out.println("dead");
         }
+
+        
         
         if( proyectiles.getSize() != 0){
         	proyectiles.Updateall();
@@ -132,6 +128,7 @@ public class Game {
     }
     
     public void render(){
+        map.render();
         player.render();
         if( proyectiles != null){
         	proyectiles.Renderall();
