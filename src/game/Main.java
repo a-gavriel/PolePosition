@@ -72,10 +72,12 @@ public class Main{
     
     
     private static void gameLoop(){
+        //Camera cam = new Camera(70,(float) Display.getWidth() /(float)Display.getHeight(),0.3f,1000);
+        
         while (!Display.isCloseRequested()) {        
-        getInput();  
-        update();
-        render();        
+            getInput();  
+            update();
+            render();        
         }
     }
 

@@ -15,7 +15,7 @@ public abstract class GameObject {
     abstract void update();
     
     public void render(){
-        Draw.rect(x,y,sx,sy);
+        Draw.rect(x,y,sx,sy,1f,1f,1f);
     }
     
     public float getX (){

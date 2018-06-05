@@ -67,9 +67,10 @@ public class Map {
                     matriz[i][j] = Character.getNumericValue(x[j]);
                 }
                 i+=1;
-            }   
-            printmat();
-            printlist(matriz[35]);
+            }
+            System.out.println("Matrix Read");            
+            //printmat();
+            //printlist(matriz[35]);
             // Always close files.
             bufferedReader.close();         
         }
@@ -92,12 +93,38 @@ public class Map {
     public void render(){        
         //printmat();
         int z = matriz.length;
-        
+        /// bloques 5 7 y 9 están sin utilizar (huecos, vidas, turbos)
         for (int i = 0; i< z ; ++i){
             for (int j = 0; j<z ;++j){
                 if (matriz[j][i] == 0 ){
-                        Draw.rect(i*size,(z-j)*size,size,size);
+                        Draw.rect(i*size,(z-j)*size,size,size,0.6f,0.57f,0.4f);
+                    }                
+                if (matriz[j][i] == 1 ){
+                        Draw.rect(i*size,(z-j)*size,size,size,1f,0f,0f);                        
                     }
+                if (matriz[j][i] == 2 ){
+                        Draw.rect(i*size,(z-j)*size,size,size,0.25f,0.25f,0.25f);                        
+                    }
+                if (matriz[j][i] == 3 ){
+                        Draw.rect(i*size,(z-j)*size,size,size,1f,1f,1f);                        
+                    }
+                if (matriz[j][i] == 4 ){
+                        Draw.rect(i*size,(z-j)*size,size,size,0.4f,0.4f,0.4f);                        
+                    }
+                if (matriz[j][i] == 5 ){
+                        Draw.rect(i*size,(z-j)*size,size,size,0.17f,0.62f,0.1f);                        
+                    }
+                if (matriz[j][i] == 6 ){
+                        Draw.rect(i*size,(z-j)*size,size,size,0.3f,0.96f,0f);                        
+                    }
+                if (matriz[j][i] == 7 ){
+                        Draw.rect(i*size,(z-j)*size,size,size,0.6f,0.6f,0.6f);                        
+                    }
+                if (matriz[j][i] == 8 ){
+                        Draw.rect(i*size,(z-j)*size,size,size,0.75f,0.75f,0.75f);                        
+                    }
+                
+                
             }
             /*
             for (int j = 0; j < z; ++j){               
