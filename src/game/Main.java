@@ -31,6 +31,7 @@ public class Main{
     private static Object gl;
     
     public static void main (String[] args){   
+        Map.readmat();
         initDisplay();
         initGL();        
         initGame();        
@@ -99,7 +100,7 @@ public class Main{
     
     private static void initDisplay(){
         try {
-            Display.setDisplayMode(new DisplayMode(800,600));
+            Display.setDisplayMode(new DisplayMode(672,672));
             Display.create();
             Display.setVSyncEnabled(true);
             Keyboard.create();

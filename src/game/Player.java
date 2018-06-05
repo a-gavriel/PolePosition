@@ -2,45 +2,30 @@ package game;
 import org.lwjgl.opengl.Display;
 
 
-public class Heroe extends GameObject {
+public class Player extends GameObject {
 
-    private static final int SIZEY = 20;
-    private static final int SIZEX = SIZEY * 2;
-    private static final float SPEED = 6f;
+    private static final int SIZEY = 4;
+    private static final int SIZEX = 4;
+    private static float Acceleration = 0.01f;
+    private static float MaxSpeed = 2f;
+    private static float SPEED = 0;
     private static int hearts = 3;
-    private static int nivel = 1;
     
-    public Heroe(String nombre,  int ammo, float x, float y) {
+    public Player(String nombre,  int ammo, float x, float y) {
             
         this.x = x;
         this.y = y;
         this.sx = SIZEX;
         this.sy = SIZEY;
-        this.life = 10;
-        this.dmg = 1;
-        
     }
-    public void addHeart(int mag)
-    {
-        hearts += mag;
-    }
-    public int getheart ()
-    {
-        return hearts;
-    }
-    public void nextlevel()
-    {
-        nivel +=1;
-        System.out.println("nextlvl");
-    }
-    
+
     
     
     @Override
     public void update()
     {
-        //if (Physics.checkCollisions(this, ball))
-        //    ball.reverseX(getCenterY());
+        if (SPEED < MaxSpeed)
+            SPEED += Acceleration;
     }    
     public void moveY(float mag)
     {
