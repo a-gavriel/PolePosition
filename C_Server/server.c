@@ -1,9 +1,9 @@
 #include "server.h"
 
-
 void init()
 {
     memset(clients_arr, 0, 4);
+    current_client = 0;
 
     socket_desc = socket(AF_INET , SOCK_STREAM , 0);
 
@@ -15,7 +15,7 @@ void init()
 
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = INADDR_ANY;
-    server.sin_port = htons( 8888 );
+    server.sin_port = htons( 10000 );
 
 
     if( bind(socket_desc,(struct sockaddr *)&server , sizeof(server)) < 0)
@@ -39,13 +39,9 @@ void run()
 {
     pthread_t thread_id;
 
-    int current_client = 0;
-
     while( (client_sock = accept(socket_desc, (struct sockaddr *)&client, (socklen_t*)&c)) )
     {
         puts("Connection accepted");
-
-        clients_arr[current_client] = client_sock;
 
         if( pthread_create( &thread_id , NULL ,  connection_handler , (void*) &client_sock) < 0)
         {
@@ -67,21 +63,22 @@ void run()
 
 void *connection_handler(void *socket_desc)
 {
-    //printf("Thread number, %d \n", (int) pthread_self());
-
     int sock = *(int *) socket_desc;
     int read_size;
-    char *message, client_message[2000];
+    char message[50], client_message[2000];
+    int id = (int) pthread_self();
 
-    message = "Greetings! I am your connection handler\n";
-    write(sock, message, strlen(message));
+    set_client(&sock, &id);
+    sprintf(message, "You are client number %d \n", current_client);
 
-    message = "Now type something and i shall repeat what you type \n";
     write(sock, message, strlen(message));
 
     while ((read_size = recv(sock, client_message, 2000, 0)) > 0) {
-        //end of string marker
         client_message[read_size] = '\0';
+
+        //printf("Client number %d \n", get_client_id(&id));
+
+        set_list(client_message);
 
         write(sock, client_message, strlen(client_message));
 
@@ -103,7 +100,31 @@ void send_to_all(char* message)
     for (int i = 0; i < 4; ++i)
     {
         if (clients_arr[i] != 0)
-            write(clients_arr[i] , message, strlen(message));
+            write(*clients_arr[i]->sock , message, strlen(message));
     }
+}
+
+void set_client(int* sock, int* thread_id)
+{
+    pthread_mutex_lock(&locker);
+
+    struct client *ptr_one;
+    ptr_one = (struct client *)malloc(sizeof(struct client));
+    ptr_one->sock = sock;
+    ptr_one->pthread_id = thread_id;
+
+
+    clients_arr[current_client] = ptr_one;
+
+    pthread_mutex_unlock(&locker);
+}
+
+void set_list(char* h)
+{
+    pthread_mutex_lock(&locker);
+
+    printf("%s", h);
+
+    pthread_mutex_unlock(&locker);
 }
 
