@@ -7,11 +7,11 @@ public class Player extends GameObject {
     private static final int SIZEY = 4;
     private static final int SIZEX = 4;
     private static float Acceleration = 0.01f;
-    private static float MaxSpeed = 2f;
-    private static float SPEED = 1;
-    private static int hearts = 3;
-    private static int Matx;
-    private static int Maty;
+    private static float MaxSpeed = 2.5f;
+    private float SPEED = 1;
+    private int hearts = 3;
+    private int Matx;
+    private int Maty;
     
     public Player(String nombre,  int ammo, float x, float y) {
             
@@ -37,9 +37,11 @@ public class Player extends GameObject {
     public void render(){
         Draw.rect(x,y,sx,sy,0,0,0);
     }
+    public void render2(){
+        Draw.rect(80,80,40,40,0,0,0);
+    }
     
-    public void moveY(float mag)
-    {
+    public void moveY(float mag){
         if (mag > 0)
             if (y < ((Display.getHeight() )- this.sy * 1.2))
                 y += SPEED * mag;
@@ -47,8 +49,8 @@ public class Player extends GameObject {
             if (y>0)
                 y += SPEED * mag;
     }
-    public void moveX(float mag)
-    {
+    
+    public void moveX(float mag){
         if (mag > 0)
         {
             if (x+sx < Display.getWidth())
@@ -63,6 +65,13 @@ public class Player extends GameObject {
                 x += SPEED * mag;
             }                
         }                
+    }
+    
+    public int getMatx(){
+        return Matx;
+    }
+    public int getMaty(){
+        return Maty;
     }
     
 }

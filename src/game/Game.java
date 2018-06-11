@@ -14,6 +14,7 @@ import java.util.TimerTask;
  *
  * @author Alexis
  */
+
 public class Game {    
     public static int size = Map.size;
     public static Map map = new Map();
@@ -47,7 +48,7 @@ public class Game {
     public Game(){        
     	this.start();
         //Random random = new Random();
-        }
+    }
         
 
         
@@ -128,8 +129,8 @@ public class Game {
     }
     
     public void render(){
-        map.render();
-        player.render();
+        map.render(player);
+        player.render2();
         if( proyectiles != null){
         	proyectiles.Renderall();
         	  }

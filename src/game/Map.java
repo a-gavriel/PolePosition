@@ -32,12 +32,12 @@ public class Map {
         System.out.println(st);
     }
     
-    public static void printmat(){
-        int l = matriz.length;
+    public static void printmat(int [][] mat){
+        int l = mat.length;
         String st = "";
         for (int i = 0; i<l ; ++i){
             for (int j = 0; j<l; ++j){
-                int a = matriz[i][j];
+                int a = mat[i][j];
                 st += (a);
             }
             st += "\n";
@@ -122,6 +122,66 @@ public class Map {
                     }
                 if (matriz[j][i] == 8 ){
                         Draw.rect(i*size,(z-j)*size,size,size,0.75f,0.75f,0.75f);                        
+                    }
+                
+                
+            }
+            /*
+            for (int j = 0; j < z; ++j){               
+                if (matriz[i][j] == 0 ){
+                    Draw.rect(j*size,(z-i)*size,j*size+size,(z-i)*size+size);
+                }
+            }
+            */
+        }
+    }
+
+    public void render(Player pl){        
+        //printmat();
+        int x = pl.getMatx();
+        int y = pl.getMaty();
+        int newMat[][] = {        
+                   
+        {matriz[y-3][x-2],matriz[y-3][x-1],matriz[y-3][x],matriz[y-3][x+1],matriz[y-3][x+2]},
+        {matriz[y-2][x-2],matriz[y-2][x-1],matriz[y-2][x],matriz[y-2][x+1],matriz[y-2][x+2]},
+        {matriz[y-1][x-2],matriz[y-1][x-1],matriz[y-1][x],matriz[y-1][x+1],matriz[y-1][x+2]},
+        {matriz[ y ][x-2],matriz[ y ][x-1],matriz[ y ][x],matriz[ y ][x+1],matriz[ y ][x+2]},
+        {matriz[y+1][x-2],matriz[y+1][x-1],matriz[y+1][x],matriz[y+1][x+1],matriz[y+1][x+2]}
+                
+                };
+   
+        int size2 = 40;
+        printmat(newMat);
+        int z = newMat.length;
+        /// bloques 5 7 y 9 están sin utilizar (huecos, vidas, turbos)
+        for (int i = 0; i<z ; ++i){
+            for (int j = 0; j<z ;++j){
+                if (newMat[j][i] == 0 ){
+                        Draw.rect(i*size2,(z-j)*size2,size2,size2,0.6f,0.57f,0.4f);
+                    }                
+                if (newMat[j][i] == 1 ){
+                        Draw.rect(i*size2,(z-j)*size2,size2,size2,1f,0f,0f);                        
+                    }
+                if (newMat[j][i] == 2 ){
+                        Draw.rect(i*size2,(z-j)*size2,size2,size2,0.25f,0.25f,0.25f);                        
+                    }
+                if (newMat[j][i] == 3 ){
+                        Draw.rect(i*size2,(z-j)*size2,size2,size2,1f,1f,1f);                        
+                    }
+                if (newMat[j][i] == 4 ){
+                        Draw.rect(i*size2,(z-j)*size2,size2,size2,0.4f,0.4f,0.4f);                        
+                    }
+                if (newMat[j][i] == 5 ){
+                        Draw.rect(i*size2,(z-j)*size2,size2,size2,0.17f,0.62f,0.1f);                        
+                    }
+                if (newMat[j][i] == 6 ){
+                        Draw.rect(i*size2,(z-j)*size2,size2,size2,0.3f,0.96f,0f);                        
+                    }
+                if (newMat[j][i] == 7 ){
+                        Draw.rect(i*size2,(z-j)*size2,size2,size2,0.6f,0.6f,0.6f);                        
+                    }
+                if (newMat[j][i] == 8 ){
+                        Draw.rect(i*size2,(z-j)*size2,size2,size2,0.75f,0.75f,0.75f);                        
                     }
                 
                 

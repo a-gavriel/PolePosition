@@ -50,22 +50,31 @@ public class Camera {
     }
     
     public void useView(){
-        glRotatef(getRx(),1,0,0);
-        glRotatef(getRy(),0,1,0);
-        glRotatef(getRz(),0,0,1);
-        glTranslatef(getX(), getY(), getZ());        
+        glRotatef(rx,1,0,0);
+        glRotatef(ry,0,1,0);
+        glRotatef(rz,0,0,1);
+        glTranslatef(x, y, z);        
     }
+
+    public void move(float amt, float dir){
+        z += amt * Math.sin(Math.toRadians(ry + 90 * dir));
+        x += amt * Math.cos(Math.toRadians(ry + 90 * dir));
+    }
+
+    public void rotateY(float amt){
+        ry += amt;
+    }
+
+
 
 
     public float getX() {
         return x;
     }
 
-
     public void setX(float x) {
         this.x = x;
     }
-
 
     public float getY() {
         return y;
