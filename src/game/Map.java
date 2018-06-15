@@ -152,6 +152,23 @@ public class Map {
    
         int size2 = 40;
         printmat(newMat);
+        
+        System.out.println("--+++----");
+        
+        
+        String sb = "";
+        int ijmat = 0;
+        
+        for (int i = y-3; i < y + 2; i++) {
+            for (int j = x-2; j < x + 3; j++){
+                ijmat = matriz[i][j];
+                sb += (ijmat);
+            }
+            sb+=("\n");
+        }
+        System.out.println(sb);
+        System.out.println("---------");
+        
         int z = newMat.length;
         /// bloques 5 7 y 9 están sin utilizar (huecos, vidas, turbos)
         for (int i = 0; i<z ; ++i){

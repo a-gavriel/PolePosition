@@ -31,7 +31,7 @@ public class PruebaMat {
     int sy = 2;
     System.out.println("Part of the matrix:");
     
-    System.out.println(full.getSubMatrix(2, 3, 3, 4));
+    System.out.println(full.getArMatrix(2, 1, 2, 2));
 
 }
     

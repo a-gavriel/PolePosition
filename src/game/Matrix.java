@@ -29,7 +29,7 @@ public class Matrix {
         return new Matrix(data, this.x + x , this.y + y, columns, rows);
     }
     
-    public Matrix geArMatrix(int x, int y, int columns, int rows) {
+    public Matrix getArMatrix(int x, int y, int columns, int rows) {
         return new Matrix(data, this.x + x - columns, this.y + y - rows, 2*columns+1, 2*rows+1);
     }
 
