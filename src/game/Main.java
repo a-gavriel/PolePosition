@@ -29,6 +29,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 public class Main{
     private static Game game;
     private static Object gl;
+    public static Camera cam;
     
     public static void main (String[] args){   
         Map.readmat();
@@ -40,6 +41,8 @@ public class Main{
     }
     
     private static void initGame(){
+        cam = new Camera(70,(float) Display.getWidth() /(float)Display.getHeight(),0.3f,1000);
+        cam.rotateX(-60f);
         game = new Game();
     }
     
@@ -53,13 +56,16 @@ public class Main{
     }
     
     private static void render(){
-        glClear(GL_COLOR_BUFFER_BIT);
-        glLoadIdentity();        
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glLoadIdentity();
+        cam.useView();
         game.render();        
         Display.update();
         Display.sync(60);
     }
     
+    
+    //la imagen debe ser cuadrada y tener dimensiones de 2^n
     public static Texture loadTexture(String key){
         try {
             return TextureLoader.getTexture(".png", new FileInputStream(new File("res/" + key + ".png")));
@@ -104,6 +110,7 @@ public class Main{
         try {
             Display.setDisplayMode(new DisplayMode(672,672));
             Display.create();
+            Display.setLocation(Display.getX(), Display.getY() - 50);
             Display.setVSyncEnabled(true);
             Keyboard.create();
         } catch (LWJGLException ex) {

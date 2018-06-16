@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import org.lwjgl.opengl.Display;
 
 /**
  *
@@ -140,69 +141,69 @@ public class Map {
         //printmat();
         int x = pl.getMatx();
         int y = pl.getMaty();
-        int newMat[][] = {        
-                   
-        {matriz[y-3][x-2],matriz[y-3][x-1],matriz[y-3][x],matriz[y-3][x+1],matriz[y-3][x+2]},
-        {matriz[y-2][x-2],matriz[y-2][x-1],matriz[y-2][x],matriz[y-2][x+1],matriz[y-2][x+2]},
-        {matriz[y-1][x-2],matriz[y-1][x-1],matriz[y-1][x],matriz[y-1][x+1],matriz[y-1][x+2]},
-        {matriz[ y ][x-2],matriz[ y ][x-1],matriz[ y ][x],matriz[ y ][x+1],matriz[ y ][x+2]},
-        {matriz[y+1][x-2],matriz[y+1][x-1],matriz[y+1][x],matriz[y+1][x+1],matriz[y+1][x+2]}
-                
-                };
-   
-        int size2 = 40;
-        printmat(newMat);
         
-        System.out.println("--+++----");
+   
+        int sizeW = Display.getWidth() /5;
+        int sizeH = Display.getHeight() /5;
+        
+        
         
         
         String sb = "";
-        int ijmat = 0;
+        int ijmat1 = 0;
         
-        for (int i = y-3; i < y + 2; i++) {
+        for (int i = y-4; i < y + 1; i++) {
             for (int j = x-2; j < x + 3; j++){
-                ijmat = matriz[i][j];
-                sb += (ijmat);
+                ijmat1 = matriz[i][j];
+                sb += (ijmat1);
             }
             sb+=("\n");
         }
-        System.out.println(sb);
-        System.out.println("---------");
+        //System.out.println("--+++----");
+        //System.out.println(sb);
+        //System.out.println("---------");
         
-        int z = newMat.length;
+        int z = matriz.length;
         /// bloques 5 7 y 9 están sin utilizar (huecos, vidas, turbos)
-        for (int i = 0; i<z ; ++i){
-            for (int j = 0; j<z ;++j){
-                if (newMat[j][i] == 0 ){
-                        Draw.rect(i*size2,(z-j)*size2,size2,size2,0.6f,0.57f,0.4f);
-                    }                
-                if (newMat[j][i] == 1 ){
-                        Draw.rect(i*size2,(z-j)*size2,size2,size2,1f,0f,0f);                        
-                    }
-                if (newMat[j][i] == 2 ){
-                        Draw.rect(i*size2,(z-j)*size2,size2,size2,0.25f,0.25f,0.25f);                        
-                    }
-                if (newMat[j][i] == 3 ){
-                        Draw.rect(i*size2,(z-j)*size2,size2,size2,1f,1f,1f);                        
-                    }
-                if (newMat[j][i] == 4 ){
-                        Draw.rect(i*size2,(z-j)*size2,size2,size2,0.4f,0.4f,0.4f);                        
-                    }
-                if (newMat[j][i] == 5 ){
-                        Draw.rect(i*size2,(z-j)*size2,size2,size2,0.17f,0.62f,0.1f);                        
-                    }
-                if (newMat[j][i] == 6 ){
-                        Draw.rect(i*size2,(z-j)*size2,size2,size2,0.3f,0.96f,0f);                        
-                    }
-                if (newMat[j][i] == 7 ){
-                        Draw.rect(i*size2,(z-j)*size2,size2,size2,0.6f,0.6f,0.6f);                        
-                    }
-                if (newMat[j][i] == 8 ){
-                        Draw.rect(i*size2,(z-j)*size2,size2,size2,0.75f,0.75f,0.75f);                        
-                    }
+        int ijmat;
+        int i = 4;
+        int j = 0;
+        for (int ii = y-4; ii < y + 1; ii++) {
+            for (int jj = x-2; jj < x + 3; jj++){
+                ijmat = matriz[ii][jj];
                 
+                if (ijmat == 0 ){
+                        Draw.rect(j*sizeW,(i)*sizeH,sizeW,sizeH,0.6f,0.57f,0.4f);
+                    }                
+                if (ijmat == 1 ){
+                        Draw.rect(j*sizeW,(i)*sizeH,sizeW,sizeH,1f,0f,0f);                        
+                    }
+                if (ijmat == 2 ){
+                        Draw.rect(j*sizeW,(i)*sizeH,sizeW,sizeH,0.25f,0.25f,0.25f);                        
+                    }
+                if (ijmat == 3 ){
+                        Draw.rect(j*sizeW,(i)*sizeH,sizeW,sizeH,1f,1f,1f);                        
+                    }
+                if (ijmat == 4 ){
+                        Draw.rect(j*sizeW,(i)*sizeH,sizeW,sizeH,0.4f,0.4f,0.4f);                        
+                    }
+                if (ijmat == 5 ){
+                        Draw.rect(j*sizeW,(i)*sizeH,sizeW,sizeH,0.17f,0.62f,0.1f);                        
+                    }
+                if (ijmat == 6 ){
+                        Draw.rect(j*sizeW,(i)*sizeH,sizeW,sizeH,0.3f,0.96f,0f);                        
+                    }
+                if (ijmat == 7 ){
+                        Draw.rect(j*sizeW,(i)*sizeH,sizeW,sizeH,0.6f,0.6f,0.6f);                        
+                    }
+                if (ijmat == 8 ){
+                        Draw.rect(j*sizeW,(i)*sizeH,sizeW,sizeH,0.75f,0.75f,0.75f);                        
+                    }
+                ++j;
                 
             }
+            j=0;
+            --i;
             /*
             for (int j = 0; j < z; ++j){               
                 if (matriz[i][j] == 0 ){

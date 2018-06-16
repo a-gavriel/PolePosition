@@ -18,10 +18,10 @@ public class Draw {
             glRotatef(rot,0,0,1);
             glBegin(GL_QUADS);
             {
-                glVertex2f(0,0);
-                glVertex2f(0,height);
-                glVertex2f(width,height);
-                glVertex2f(width,0);       
+                glVertex3f(0,0,1);
+                glVertex3f(0,height,1);
+                glVertex3f(width,height,1);
+                glVertex3f(width,0,1);      
             }
 
             glEnd();
@@ -44,15 +44,46 @@ public class Draw {
             glRotatef(rot,0,0,1);
             glBegin(GL_QUADS);
             {
-                glVertex2f(0,0);
-                glVertex2f(0,height);
-                glVertex2f(width,height);
-                glVertex2f(width,0);       
+                glVertex3f(0,0,1);
+                glVertex3f(0,height,1);
+                glVertex3f(width,height,1);
+                glVertex3f(width,0,1);       
             }
 
             glEnd();
         }
         glPopMatrix();
-    }  
+    }
+    
+    public static void cube(float x, float y, float width, float height,float red,float green,float blue)
+    {
+        glPushMatrix();
+        {
+            //red-green-blue
+            glColor3f(red,green,blue);
+            glTranslatef(x,y,0);
+            glRotatef(0,0,0,1);
+            glBegin(GL_QUADS);
+            {
+                
+                glColor3f(0,0,1);                
+                glVertex3f(0,0,1);
+                glVertex3f(0,height,1);
+                glVertex3f(width,height,1);
+                glVertex3f(width,0,1);   
+                
+                glColor3f(1, 0,0);
+                glVertex3f(0,0,5);
+                glVertex3f(0,height,5);
+                glVertex3f(width,height,5);
+                glVertex3f(width,0,5);  
+                
+            }
+
+            glEnd();
+        }
+        glPopMatrix();
+    }
+    
     
 }

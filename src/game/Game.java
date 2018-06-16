@@ -9,6 +9,7 @@ import org.newdawn.slick.opengl.Texture;
 import static game.Main.loadTexture;
 import java.util.Timer;
 import java.util.TimerTask;
+import static org.lwjgl.opengl.GL11.glTranslatef;
 
 /**
  *
@@ -19,7 +20,8 @@ public class Game {
     public static int size = Map.size;
     public static Map map = new Map();
     public static Player player = new Player( "nombre", 3, 150*size,(168-100)*size);
-      
+    
+    
     private int milis =0;
     ListaDoble proyectiles =new ListaDoble();
     
@@ -52,41 +54,6 @@ public class Game {
         
 
         
-/*
-    public void recreate(){
-        if ((Lista.getSize() < 4) && (milis % 10 == 1)) {         
-                if (!Cola.isEmpty() ){
-                    int x = Cola.desencolar().getData();          
-                    int randomx_pos =  randomx.nextInt(600)+100;             
-                    if (x==0) {
-                        Jet jet1;
-                        jet1 = new Jet(  randomx_pos  , Display.getHeight()); 
-                        Lista.insertFirst(jet1);     
-                    }
-                    else if (x==1)  {
-                        Kamikaze kami1;
-                        kami1 = new Kamikaze (randomx_pos  , Display.getHeight(), player.getCenterX(), player.getY()); 
-                        Lista.insertFirst(kami1);      
-                    }
-                    else if (x==2) {
-                        Bombardero bomb1;
-                        bomb1 = new Bombardero (randomx_pos  , Display.getHeight()); 
-                        Lista.insertFirst(bomb1);
-                        //System.out.println("bomb1 ins");
-                    }
-                    else if (x==3){
-                        Boss jefe1;
-                        jefe1 = new Boss (level); 
-                        Lista.insertFirst(jefe1);             
-                    }
-                }
-            }    
-    }
-*/
-    
-        
-
-    
     public void getInput(){        
         if (Keyboard.isKeyDown(Keyboard.KEY_W) || (Keyboard.isKeyDown(Keyboard.KEY_UP)))
             player.moveY(1);
@@ -129,8 +96,14 @@ public class Game {
     }
     
     public void render(){
-        map.render(player);
-        player.render2();
+        //System.out.println(player.x + " + " + player.y);
+        glTranslatef(0, 0, -50);
+        glTranslatef(-1*(player.x+player.sx/2),0, 0);
+        glTranslatef(0, -1*(player.y-30), 0);
+        player.render();
+        map.render();
+        
+        
         if( proyectiles != null){
         	proyectiles.Renderall();
         	  }
