@@ -1,9 +1,10 @@
 #include "server.h"
 
-void init()
+void init_server()
 {
     memset(clients_arr, 0, 4);
     current_client = 0;
+    matrix_length = 168;
 
     socket_desc = socket(AF_INET , SOCK_STREAM , 0);
 
@@ -15,7 +16,7 @@ void init()
 
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = INADDR_ANY;
-    server.sin_port = htons( 10000 );
+    server.sin_port = htons( 16060 );
 
 
     if( bind(socket_desc,(struct sockaddr *)&server , sizeof(server)) < 0)
@@ -66,33 +67,30 @@ void *connection_handler(void *socket_desc)
     int sock = *(int *) socket_desc;
     int read_size;
     char message[50], client_message[2000];
-    int id = (int) pthread_self();
 
-    set_client(&sock, &id);
+    set_client(&sock);
     sprintf(message, "You are client number %d \n", current_client);
-
     write(sock, message, strlen(message));
 
-    while ((read_size = recv(sock, client_message, 2000, 0)) > 0) {
+    send_matrix();
+
+    while ((read_size = recv(sock, client_message, 2000, 0)) > 0)
+    {
         client_message[read_size] = '\0';
-
-        //printf("Client number %d \n", get_client_id(&id));
-
         set_list(client_message);
-
         write(sock, client_message, strlen(client_message));
-
         memset(client_message, 0, 2000);
     }
 
-    if (read_size == 0) {
+    if (read_size == 0)
+    {
         puts("Client disconnected");
         fflush(stdout);
-    } else if (read_size == -1) {
+    }
+    else if (read_size == -1)
+    {
         perror("recv failed");
     }
-
-    return 0;
 }
 
 void send_to_all(char* message)
@@ -104,15 +102,13 @@ void send_to_all(char* message)
     }
 }
 
-void set_client(int* sock, int* thread_id)
+void set_client(int* sock)
 {
     pthread_mutex_lock(&locker);
 
     struct client *ptr_one;
     ptr_one = (struct client *)malloc(sizeof(struct client));
     ptr_one->sock = sock;
-    ptr_one->pthread_id = thread_id;
-
 
     clients_arr[current_client] = ptr_one;
 
@@ -123,8 +119,33 @@ void set_list(char* h)
 {
     pthread_mutex_lock(&locker);
 
-    printf("%s", h);
+    printf("%s \n", h);
 
     pthread_mutex_unlock(&locker);
 }
+
+void send_matrix()
+{
+    char msg[matrix_length];
+
+    for (int i = 0; i < matrix_length; ++i)
+    {
+
+        for (int j = 0; j < matrix_length; ++j)
+        {
+            msg[j] = main_matrix[i][j];
+        }
+
+        msg[matrix_length - 1] = '\n';
+
+        for (int k = 0; k < 4; ++k)
+        {
+            if (clients_arr[k] != 0) {
+                puts("sended");
+                send(*clients_arr[k]->sock , msg, strlen(msg), 0);
+            }
+        }
+    }
+}
+
 

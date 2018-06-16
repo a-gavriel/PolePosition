@@ -4,7 +4,6 @@
 struct client
 {
     int* sock;
-    int* pthread_id;
 };
 
 #endif //SERVER_CLIENT_H
