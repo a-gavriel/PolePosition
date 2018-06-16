@@ -39,7 +39,7 @@ public class Player extends GameObject {
             SPEED = 0.5f;
     }    
     public void render(){
-        Draw.cube(x,y,sx,sy,0,0,0);
+        Draw.cube(x,y,sx,sy,angle-90,0,0,0);
     }
     public void render2(){
         Draw.rect(Display.getWidth()/2-(Display.getWidth()/10),(y)

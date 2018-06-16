@@ -2,6 +2,7 @@ package game;
 
 
 
+import static game.Main.cam;
 import java.util.Random;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -97,9 +98,10 @@ public class Game {
     
     public void render(){
         //System.out.println(player.x + " + " + player.y);
+        float vect = 40f;
         glTranslatef(0, 0, -50);
-        glTranslatef(-1*(player.x+player.sx/2),0, 0);
-        glTranslatef(0, -1*(player.y-30), 0);
+        glTranslatef((float) (-1*(player.x+player.sx/2 - vect* Math.cos(Math.toRadians(player.getAngle())))),0, 0);
+        glTranslatef(0, (float) ( -1*(player.y+player.sy/2 - vect* Math.sin(Math.toRadians(player.getAngle() )))), 0);
         player.render();
         map.render();
         

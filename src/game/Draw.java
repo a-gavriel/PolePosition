@@ -55,14 +55,14 @@ public class Draw {
         glPopMatrix();
     }
     
-    public static void cube(float x, float y, float width, float height,float red,float green,float blue)
+    public static void cube(float x, float y, float width, float height,float rot,float red,float green,float blue)
     {
         glPushMatrix();
         {
             //red-green-blue
             glColor3f(red,green,blue);
             glTranslatef(x,y,0);
-            glRotatef(0,0,0,1);
+            glRotatef(rot,0,0,1);
             glBegin(GL_QUADS);
             {
                 

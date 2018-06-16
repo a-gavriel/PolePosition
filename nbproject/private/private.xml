@@ -5,15 +5,15 @@
         <group>
             <file>file:/C:/Users/Alexis/Documents/TEC/Lenguajes/Java/PolePosition/src/game/Camera.java</file>
             <file>file:/C:/Users/Alexis/Documents/TEC/Lenguajes/Java/PolePosition/src/game/Draw.java</file>
+            <file>file:/C:/Users/Alexis/Documents/TEC/Lenguajes/Java/PolePosition/src/game/ico32.png</file>
             <file>file:/C:/Users/Alexis/Documents/TEC/Lenguajes/Java/PolePosition/src/game/Player.java</file>
             <file>file:/C:/Users/Alexis/Documents/TEC/Lenguajes/Java/PolePosition/src/game/Map.java</file>
-            <file>file:/C:/Users/Alexis/Documents/TEC/Lenguajes/Java/PolePosition/src/game/Shoot.java</file>
             <file>file:/C:/Users/Alexis/Documents/TEC/Lenguajes/Java/PolePosition/src/game/Main.java</file>
             <file>file:/C:/Users/Alexis/Documents/TEC/Lenguajes/Java/PolePosition/src/game/Game.java</file>
             <file>file:/C:/Users/Alexis/Documents/TEC/Lenguajes/Java/PolePosition/src/game/GameObject.java</file>
-            <file>file:/C:/Users/Alexis/Documents/TEC/Lenguajes/Java/PolePosition/src/game/ListaDoble.java</file>
-            <file>file:/C:/Users/Alexis/Documents/TEC/Lenguajes/Java/PolePosition/src/game/NodoDoble.java</file>
+            <file>file:/C:/Users/Alexis/Documents/TEC/Lenguajes/Java/PolePosition/src/networking/Client.java</file>
             <file>file:/C:/Users/Alexis/Documents/TEC/Lenguajes/Java/PolePosition/src/game/Prueba3D.java</file>
+            <file>file:/C:/Users/Alexis/Documents/TEC/Lenguajes/Java/PolePosition/src/game/NodoDoble.java</file>
         </group>
     </open-files>
 </project-private>
