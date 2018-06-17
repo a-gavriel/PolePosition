@@ -16,8 +16,11 @@ import static org.lwjgl.opengl.GL11.glTranslatef;
 public class Game {    
     public static int size = Map.size;
     public static Map map = new Map();
-    public static Player player = new Player( "nombre", 3, 143*size,(168-97)*size);
-    public static ListaDoble JugadoresE = new ListaDoble();
+    public static Player player = new Player( "nombre1", 3, 143*size,(168-97)*size);
+    public static Player[] Jugadores = new Player[3];
+    
+    
+    
     
     private int milis =0;
     ListaDoble proyectiles =new ListaDoble();
@@ -46,17 +49,9 @@ public class Game {
     
     public Game(){        
     	this.start();
-        
-        int yy = 100;
-        for (int i = 0; i < 3  ; ++i){
-            Player Nuevo;
-            if (i%2 ==1)
-                Nuevo = new Player ("nombre" , 3 , 143*size,(168-yy)*size);
-            else
-                Nuevo = new Player ("nombre", 3, 153*size , (168-yy)*size);
-            JugadoresE.insertFirst(Nuevo);
-            yy+=3;
-        }
+        Jugadores[0] = new Player ("nombre2", 3, 153*size , (168-100)*size);
+        Jugadores[1] = new Player ("nombre3", 3, 143*size , (168-103)*size);
+        Jugadores[2] = new Player ("nombre4", 3, 153*size , (168-106)*size);
     }
         
 
@@ -87,22 +82,20 @@ public class Game {
     
     public void update(){        
         player.update();      
-        if (player.getLife() <= 0){                
-            //System.out.println("dead");
-        }
-
         
+        for (Player i : Jugadores)
+            i.update();
         
         if( proyectiles.getSize() != 0){
         	proyectiles.Updateall();
-                /*
+                
                 NodoDoble current =  proyectiles.getHead();
         	while (current != null){
-                    if (Physics.checkwithListaDoble(current.getData(), Lista))
+                    if ((Physics.checkwithArray(current.getData(), Jugadores)) != 0)
                         proyectiles.delete(current);
                     current = current.getNext();
                 }      
-                */
+                
         }
         
     }
@@ -120,8 +113,9 @@ public class Game {
         if( proyectiles != null)
             proyectiles.Renderall();
         	  
-        if( JugadoresE != null)
-            JugadoresE.Renderall();
+        for (Player i : Jugadores)
+            i.render();
+      
         	  
     }
 }

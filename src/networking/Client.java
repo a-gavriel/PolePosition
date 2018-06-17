@@ -13,9 +13,10 @@ import java.util.Scanner;
 
 public class Client extends Thread {	
 	
-	private static final String IP = "192.168.100.4";
-	private static final Integer PORT = 16060;
+	private String IP = "192.168.100.4";
+	private Integer PORT = 16085;
 	private String number;
+        private String[] coloresDisp;
 	
 	private Socket socket;
     private InputStreamReader inputStreamReader;
@@ -27,8 +28,10 @@ public class Client extends Thread {
     private boolean ready = false;
 	private static Scanner scanner;
     
-    public Client() {
+    public Client(Integer port, String Ip) {
     	try {
+                this.PORT = port;
+                this.IP = Ip;
     		matrix = new String[168][168];
     		socket = new Socket(IP, PORT);
     		printStream = new PrintStream(socket.getOutputStream());
@@ -37,36 +40,13 @@ public class Client extends Thread {
 		}
     }  
     
-    public static void main(String[] args) {
-    	Client client = new Client();
-    	client.start(); 
-    	
-    	scanner = new Scanner(System.in);
-		while (true) {
-			while (!scanner.hasNextLine()) {
-				try {
-					Thread.sleep(1);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			String sInput = scanner.nextLine();
-			
-			
-			if (sInput.equalsIgnoreCase("quit")) {
-				break;
-			}
-			
-			client.printStream.println(sInput);
-		}
-    }
         
     public void sendStringToServer(String sText) {
 		this.printStream.print(sText);		
 	}
     
     public synchronized String[][] msg() {
-    	if (matrix != null)
+    	if (ready)
     		return matrix;
     	else
     		return null;
@@ -81,10 +61,10 @@ public class Client extends Thread {
     		result[0] = "7";
     	}    	
     	
+    	//System.out.println(result.toString());
     	return result;
-    }
-    
-    
+    }   
+        
     public String get_number() {
     	return number;
     }       
@@ -97,24 +77,67 @@ public class Client extends Thread {
             bufferedReader = new BufferedReader(inputStreamReader);
             while (true) {     
                 while(true) {
-                    message = bufferedReader.readLine();
+                    message = bufferedReader.readLine();  
+                    String[] split = message.split(",");                    
+                    
                     if (message == null) {
                     	break;						
-					}                       
-                    if (message.startsWith("0")) {
-                    	matrix[i] = message.split("");
-                    	i++;                     
+					}   
+                                        
+                    if (split[0].startsWith("You")) {
+                    	number = split[1];
+                    	System.out.println(number);
+                    	
                     } else if (message.startsWith("h") || message.startsWith("t")){
-                    	String[] split = process_msg(message);
-                    	System.out.println(split[0]);
-                    	matrix[Integer.parseInt(split[1])][Integer.parseInt(split[2])] = split[0];    
                     	ready = true;
-                    }                    
-                    
-                    if (ready) {
-                    	System.out.println(matrix[1][1]);
-                    }
-                    //System.out.println(matrix.length);
+                    	String[] splitM = process_msg(message);                    	
+                    	matrix[Integer.parseInt(splitM[1])][Integer.parseInt(splitM[2])] = splitM[0];
+                    	
+                    } else if(message.startsWith("d")) {
+                    	ready = true;
+                    	System.out.println("Jugador " + split[1] + ", disparó al jugador " + split[2]); 
+                    	
+                    } else if (message.startsWith("m")) {
+                    	ready = true;    
+                    	System.out.println("Jugador " + split[1] + ", esta en la posicion " + split[2] + ", " + split[3]);
+                    	
+                    } else if (message.startsWith("g")) {
+                    	System.out.println("Jugador " + split[1] + " ganó");
+                    	
+                    } else if (message.startsWith("p")) {
+                    	System.out.println("Gané " + split[1] + " puntos"); 
+                    	
+                    } else if (message.startsWith("c")) {
+                    	String[] colorSplit = message.split("");
+                        this.coloresDisp = colorSplit;
+                    	for (int k = 1; k < colorSplit.length; ++k)	{
+                    		if (k != 0) {
+                    			switch (colorSplit[k])
+                    			{
+                    			case "1":
+                    				System.out.println("Queda el color azul");
+                    				break;
+                    			case "2":
+                    				System.out.println("Queda el color verde");
+                    				break;
+                    			case "3":
+                    				System.out.println("Queda el color rojo");
+                    				break;
+                    			case "4":
+                    				System.out.println("Queda el color amarillo");
+                    				break;
+                    			default:
+                    				System.out.println("No quedan colores");
+                    			}
+                    		}
+                    	}
+                    } 
+                    else if (message.startsWith("k")) {
+                    	System.out.println("Jugador " + split[1] + " ganó " + split[2] + " puntos");                   	
+                    } else {
+                    	matrix[i] = message.split("");
+                    	i++;
+                    } 
                 }             
             }
         } catch (Exception e) {
@@ -129,5 +152,15 @@ public class Client extends Thread {
 				e.printStackTrace();
 			}	
         }        
+    }
+    public String[] getColors()
+    {
+        if(coloresDisp!= null){
+            return coloresDisp;
+        }
+        else{
+            String[] n = {"no"};
+            return n;
+        }
     }
 }

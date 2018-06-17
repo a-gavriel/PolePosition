@@ -15,9 +15,10 @@ public class Player extends GameObject {
     private int Matx;
     private int Maty;
     private float angle = 90 ;
+    private String name;
     
     public Player(String nombre,  int ammo, float x, float y) {
-            
+        this.name = nombre;
         this.x = x;
         this.y = y;
         this.sx = SIZEX;
@@ -105,7 +106,9 @@ public class Player extends GameObject {
     public boolean getHeart(){
         return this.hearts;
     }
-    
+    public String getName(){
+        return name;
+    }
 }
 
         

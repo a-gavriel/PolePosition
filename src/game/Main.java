@@ -1,11 +1,12 @@
 package game;
-
-
+import networking.Client;
+import Interfaces.InitInterface;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -13,6 +14,8 @@ import org.lwjgl.opengl.DisplayMode;
 import static org.lwjgl.opengl.GL11.*;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
+
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,11 +29,35 @@ import org.newdawn.slick.opengl.TextureLoader;
  * @author Alexis
  */
 public class Main{
+    
     private static Game game;
     private static Object gl;
     public static Camera cam;
+    private static boolean abierto;
+    private static String color;
+    public static Client cliente;
     
-    public static void main (String[] args){   
+    //
+    
+    public static void main (String[] args){ 
+        
+        abierto = true;
+        Interfaces.InitInterface.InitInterface1();
+        while(abierto){
+            try{
+                Thread.sleep(1000);
+            }catch(InterruptedException e){}
+        }
+        abierto = true;
+        Interfaces.InitInterface2.initInterface();
+        while(abierto){
+            try{
+                Thread.sleep(1000);
+            }catch(InterruptedException e){}
+        }
+        System.out.print(color);
+        cliente.sendStringToServer("c,"+color);
+
         Map.readmat();
         initDisplay();
         initGL();  
@@ -116,4 +143,21 @@ public class Main{
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }        
     }
+   
+    
+    public static void setInterState(boolean ab)
+    {
+        abierto = ab; 
+    }
+    
+    public static void crearCLiente(String ip, Integer port)
+    {
+        cliente = new Client(port, ip);
+        cliente.start();
+    }
+    
+    public static void setColor(String clor){
+        color = clor;
+    } 
+   
 }
