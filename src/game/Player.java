@@ -1,16 +1,17 @@
 package game;
 import org.lwjgl.opengl.Display;
-import static org.lwjgl.opengl.GL11.glTranslatef;
+
+
 
 
 public class Player extends GameObject {
 
     private static final int SIZEY = 4;
     private static final int SIZEX = 4;
-    private static float Acceleration = 0.01f;
+    private static float Acceleration = 0.04f;
     private static float MaxSpeed = 2.5f;
-    private float SPEED = 1;
-    private int hearts = 3;
+    private float SPEED = 0;
+    private boolean hearts = true;
     private int Matx;
     private int Maty;
     private float angle = 90 ;
@@ -27,35 +28,62 @@ public class Player extends GameObject {
     
     @Override
     public void update(){
-        if (SPEED < MaxSpeed)
-            SPEED += Acceleration;
-        if (SPEED > MaxSpeed)
-            SPEED -= Acceleration;
+        if(hearts){
+                Matx = (int) x/Map.size;
+            Maty = (int) (Map.matriz.length - y/Map.size);
+
+
+            if (Map.matriz[Maty][Matx] == 1)
+                SPEED = 0.5f;
+
+            if (Map.matriz[Maty][Matx] == 7)
+                SPEED = 0.5f;
+
+
+            SPEED -= 0.02f;
+            if(SPEED >= MaxSpeed)
+                SPEED -= Acceleration;
+
+            if (Map.matriz[Maty][Matx] == 5)
+                SPEED = 1.5f*MaxSpeed;
+
+            if(SPEED >= 0){
+                if (y < ((Display.getHeight() )- this.sy * 1.2)){
+
+                    y += SPEED * Math.sin(Math.toRadians(angle));
+                    x += SPEED * Math.cos(Math.toRadians(angle));
+                }
+            }
+            if (SPEED <=0)
+                SPEED = 0;
+        }
         
-        Matx = (int) x/Map.size;
-        Maty = (int) (Map.matriz.length - y/Map.size);
         
-        if (Map.matriz[Maty][Matx] == 1)
-            SPEED = 0.5f;
+        
+        
+       
+        
+        
+        
     }    
+    @Override
     public void render(){
         Draw.cube(x,y,sx,sy,angle-90,0,0,0);
     }
-    public void render2(){
-        Draw.rect(Display.getWidth()/2-(Display.getWidth()/10),(y)
-                ,Display.getWidth()/5,sy,0,0,0);
-    }
-    
+  
     public void moveY(float mag){
         if (mag > 0)
             if (y < ((Display.getHeight() )- this.sy * 1.2)){
+                SPEED+=Acceleration;
+                if(SPEED >= MaxSpeed)
+                    SPEED = MaxSpeed;
+                
                 y += SPEED * mag * Math.sin(Math.toRadians(angle));
                 x += SPEED * Math.cos(Math.toRadians(angle));
             }
         if (mag <0)
             if (y>0){
-                y += SPEED * mag * Math.sin(Math.toRadians(angle));
-                x += SPEED * Math.cos(Math.toRadians(angle));
+                SPEED-=Acceleration;
             }
     }
     
@@ -73,6 +101,9 @@ public class Player extends GameObject {
     }
     public float getAngle(){
         return angle;
+    }
+    public boolean getHeart(){
+        return this.hearts;
     }
     
 }

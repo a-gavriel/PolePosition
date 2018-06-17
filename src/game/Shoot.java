@@ -1,14 +1,16 @@
 package game;
 
+
+
 public class Shoot extends GameObject
 {
-    private static final int SIZEX = 5;
-    private static final int SIZEY = 20;
-    private static final float SPEED = 4f;
+    private static final int SIZEX = 2;
+    private static final int SIZEY = 2;
+    private static final float SPEED = 10f;
     private String type;
     private int dmg;
     
-    public Shoot (float x , float y, String type)
+    public Shoot (float x , float y, String type, float rot1)
     {
         this.x = x;
         this.y = y;
@@ -17,6 +19,7 @@ public class Shoot extends GameObject
         this.type=type;
         this.life =1;
         this.dmg = 1;
+        this.rot = rot1;
     }
     
     
@@ -24,9 +27,19 @@ public class Shoot extends GameObject
     public void update()
     {
 	if(type.equalsIgnoreCase("Heroe")){
-        y += SPEED;}
+            y += SPEED* Math.sin(Math.toRadians(rot));
+            x += SPEED*Math.cos(Math.toRadians(rot));
+        }
+        
 	if(type.equalsIgnoreCase("enemigo")){
-        y -= SPEED;}
+        y -= SPEED;
+        x += SPEED;
+        }
+    }
+    @Override
+    public void render(){
+        
+        Draw.cube(x,y,sx,sy, rot,0,0,0);
     }
     
 }

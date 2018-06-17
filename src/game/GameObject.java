@@ -1,7 +1,6 @@
 package game;
 
-import org.newdawn.slick.opengl.Texture;
-import static game.Main.loadTexture;
+
 
 
 public abstract class GameObject {
@@ -11,6 +10,7 @@ public abstract class GameObject {
     protected float sx;
     protected float sy;
     protected int life;
+    protected float rot;
     
     abstract void update();
     

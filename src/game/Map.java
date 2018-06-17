@@ -6,10 +6,16 @@
 package game;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
 
 /**
  *
@@ -45,6 +51,17 @@ public class Map {
         }
         System.out.println(st);
     }
+    
+    public static Texture loadTexture(String key) {
+        try {
+            return TextureLoader.getTexture("png", new FileInputStream(new File("res/" + key + ".png")));
+        } catch (IOException ex) {
+            Logger.getLogger(Map.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+    
     
     public static void readmat(){
         // The name of the file to open.
@@ -94,6 +111,7 @@ public class Map {
     public void render(){        
         //printmat();
         int z = matriz.length;
+        
         /// bloques 5 7 y 9 están sin utilizar (huecos, vidas, turbos)
         for (int i = 0; i< z ; ++i){
             for (int j = 0; j<z ;++j){

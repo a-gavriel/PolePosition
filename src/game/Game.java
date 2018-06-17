@@ -2,12 +2,8 @@ package game;
 
 
 
-import static game.Main.cam;
 import java.util.Random;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
-import org.newdawn.slick.opengl.Texture;
-import static game.Main.loadTexture;
 import java.util.Timer;
 import java.util.TimerTask;
 import static org.lwjgl.opengl.GL11.glTranslatef;
@@ -21,7 +17,7 @@ public class Game {
     public static int size = Map.size;
     public static Map map = new Map();
     public static Player player = new Player( "nombre", 3, 150*size,(168-100)*size);
-    
+    public static ListaDoble JugadoresE = new ListaDoble();
     
     private int milis =0;
     ListaDoble proyectiles =new ListaDoble();
@@ -37,7 +33,7 @@ public class Game {
     TimerTask task01=new TimerTask(){
         public void run(){
             milis++;    		
-            if (milis%200 == 1){
+            if (milis%500 == 1){
                     bandera = true; }                
         }                         
     };
@@ -50,7 +46,17 @@ public class Game {
     
     public Game(){        
     	this.start();
-        //Random random = new Random();
+        
+        int yy = 0;
+        for (int i = 0; i < 3  ; ++i){
+            Player Nuevo;
+            if (i%2 ==1)
+                Nuevo = new Player ("nombre" , 3 , 143*size,(168-yy)*size);
+            else
+                Nuevo = new Player ("nombre", 3, 153*size , (168-yy)*size);
+            JugadoresE.insertFirst(Nuevo);
+            yy+=3;
+        }
     }
         
 
@@ -66,12 +72,17 @@ public class Game {
             player.moveX(1);       
         if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)){         	
         	if( bandera ) {
-                    //Shoot disparo;
-                    Shoot disparo = new Shoot(player.getX()+player.getSX()/2,player.getY()+player.getSY(),"heroe");
-                    proyectiles.insertFirst(disparo);
-                    bandera = false;                
+                    if(player.getHeart()){
+                        //Shoot disparo;
+                        Shoot disparo = new Shoot(player.getX()+player.getSX()/2*((float)Math.cos(Math.toRadians(player.getAngle()-90))),
+                                player.getY()+player.getSY()/2*((float)Math.sin(Math.toRadians(player.getAngle()-90))),
+                                "heroe", player.getAngle());
+                        proyectiles.insertFirst(disparo);
+                        bandera = false;                
                 }
+            }
         }
+                
     }
     
     public void update(){        
@@ -106,8 +117,11 @@ public class Game {
         map.render();
         
         
-        if( proyectiles != null){
-        	proyectiles.Renderall();
-        	  }
+        if( proyectiles != null)
+            proyectiles.Renderall();
+        	  
+        if( JugadoresE != null)
+            JugadoresE.Renderall();
+        	  
     }
 }
