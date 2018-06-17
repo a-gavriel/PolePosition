@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Interfaces;
 import game.Main;
 
 
 /**
- *
- * @author Crisptofer
+ * Clase encargade de mostrar la pantalla de inicio
  */
 public class InitInterface extends javax.swing.JFrame {
 
@@ -18,7 +12,6 @@ public class InitInterface extends javax.swing.JFrame {
      */
     public InitInterface() {
         initComponents();
-        
     }
 
     /**
@@ -36,9 +29,9 @@ public class InitInterface extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         port = new javax.swing.JTextField();
-        
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        
+
         jLabel1.setFont(new java.awt.Font("Segoe Print", 1, 18)); // NOI18N
         jLabel1.setText("Pole Position Costa Rica");
 
@@ -104,15 +97,18 @@ public class InitInterface extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addContainerGap(48, Short.MAX_VALUE))
         );
-        
+
         pack();
-        this.setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    /**
+     * Obtiene el puerto y la IP del usuario
+     * @param evt
+     */
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
        
         Integer puerto =  Integer.parseInt(this.port.getText());
@@ -154,10 +150,8 @@ public class InitInterface extends javax.swing.JFrame {
             public void run() {
                 new InitInterface().setVisible(true);
                 
-                
             }
         });
-        
     }
 
     
@@ -171,4 +165,3 @@ public class InitInterface extends javax.swing.JFrame {
     private javax.swing.JTextField port;
     // End of variables declaration//GEN-END:variables
 }
-
