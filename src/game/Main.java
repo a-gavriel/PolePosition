@@ -64,7 +64,7 @@ public class Main{
             
         }
        
-        color = "4";
+        
         Map.readmat();
         initDisplay();
         initGL();  
