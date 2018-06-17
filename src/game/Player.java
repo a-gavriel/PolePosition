@@ -35,6 +35,8 @@ public class Player extends GameObject {
      * Posición en la matriz
      */
     private int Matx;
+    
+    private int Maty;
     /**
      * Posición de la matriz
      */
@@ -106,25 +108,24 @@ public class Player extends GameObject {
     @Override
     public void render(){
         
-        System.out.println(Main.color);
+        //System.out.println(Main.color);
         
-       if(Main.color.equals("1")){
+       if(this.name.equals("1")){
             Draw.cube(x,y,sx,sy,angle-90,1,0,0);
        }
-        if(Main.color.equals("2")){
+        if(this.name.equals("2")){
             Draw.cube(x,y,sx,sy,angle-90,0,1,0);
        }
-        if(Main.color.equals("3")){
+        if(this.name.equals("3")){
             Draw.cube(x,y,sx,sy,angle-90,0,0,1);
        }
-        if(Main.color.equals("4")){
+        if(this.name.equals("4")){
             Draw.cube(x,y,sx,sy,angle-90,1,1,0);
        }
         else{
             Draw.cube(x,y,sx,sy,angle-90,0,0,0);
         }
-       
-       
+     
         
     }
 

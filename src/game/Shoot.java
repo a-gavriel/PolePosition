@@ -6,7 +6,7 @@ public class Shoot extends GameObject
 {
     private static final int SIZEX = 2;
     private static final int SIZEY = 2;
-    private static final float SPEED = 11f;
+    private static final float SPEED = 12f;
     private String type;
     private int dmg;
     

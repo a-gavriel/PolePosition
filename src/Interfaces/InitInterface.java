@@ -18,6 +18,7 @@ public class InitInterface extends javax.swing.JFrame {
      */
     public InitInterface() {
         initComponents();
+        
     }
 
     /**
@@ -35,9 +36,9 @@ public class InitInterface extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         port = new javax.swing.JTextField();
-
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
+        
         jLabel1.setFont(new java.awt.Font("Segoe Print", 1, 18)); // NOI18N
         jLabel1.setText("Pole Position Costa Rica");
 
@@ -103,8 +104,9 @@ public class InitInterface extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addContainerGap(48, Short.MAX_VALUE))
         );
-
+        
         pack();
+        this.setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -152,8 +154,10 @@ public class InitInterface extends javax.swing.JFrame {
             public void run() {
                 new InitInterface().setVisible(true);
                 
+                
             }
         });
+        
     }
 
     
@@ -167,3 +171,4 @@ public class InitInterface extends javax.swing.JFrame {
     private javax.swing.JTextField port;
     // End of variables declaration//GEN-END:variables
 }
+

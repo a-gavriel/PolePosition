@@ -170,7 +170,7 @@ public class Draw {
              */
             {
 //front face
-                    glColor3f(0, 0, 0);
+                    glColor3f(1, 1, 0);
                     glVertex3f(0, height, 2);
                     glVertex3f(0, height, 3);
                     glVertex3f(width,height, 3);
@@ -178,7 +178,7 @@ public class Draw {
                     
 
 //BackFace
-                    glColor3f(0, 0, 0);
+                    glColor3f(1, 1, 0);
                     glVertex3f(0, 0, 2);
                     glVertex3f(0, 0, 2);
                     glVertex3f(width,0, 3);
@@ -186,7 +186,7 @@ public class Draw {
                    
 
 //BottomFace
-                    glColor3f(0,0,0);                
+                    glColor3f(1,1,0);                
                     glVertex3f(0,0,2);
                     glVertex3f(0,height,2);
                     glVertex3f(width,height,2);
@@ -194,7 +194,7 @@ public class Draw {
                     
 
 //TopFace
-                    glColor3f(0, 0,0);
+                    glColor3f(1, 1,0);
                     glVertex3f(0,0,3);
                     glVertex3f(0,height,3);
                     glVertex3f(width,height,3);
@@ -202,7 +202,7 @@ public class Draw {
                     
 
 //LeftFace
-                    glColor3f(0, 0, 0);
+                    glColor3f(1, 1, 0);
                     glVertex3f(0, 0, 2);                    
                     glVertex3f(0, 0, 3);
                     glVertex3f(0,height, 3);
@@ -210,7 +210,7 @@ public class Draw {
                     
 
 //Right Face
-                    glColor3f(0, 0, 0);
+                    glColor3f(1, 1, 0);
                     glVertex3f(width, 0, 2);                    
                     glVertex3f(width, 0, 3);                    
                     glVertex3f(width,height, 3);
