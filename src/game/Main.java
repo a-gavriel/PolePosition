@@ -15,29 +15,41 @@ import static org.lwjgl.opengl.GL11.*;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
-
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * 
- *
- * @author Alexis
+ * Clase encargada de inciar el programa
  */
-public class Main{
-    
+
+public class Main {
+
+    /**
+     * Juego
+     */
     private static Game game;
+    /**
+     * Objeto de OpenGl
+     */
     private static Object gl;
+    /**
+     * Clase cámara
+     */
     public static Camera cam;
+    /**
+     * Estado
+     */
     private static boolean abierto;
-    public static String color;
+    /**
+     * 
+     */
+    private static String color;
+    /**
+     * Cliente encargado de la conexión
+     */
     public static Client cliente;
-    
-    //
+
+    /**
+     * Método de inicio
+     * @param args
+     */
     
     public static void main (String[] args){ 
         
@@ -57,14 +69,7 @@ public class Main{
         }
         System.out.print(color);
         cliente.sendStringToServer("c,"+color);
-        cliente.sendStringToServer("r,"+cliente.get_number());
-        while(!cliente.getReady()){
-            System.out.println("Esperando Conexiónes...");
-            /*try{
-                //Thread.sleep(100);
-                
-            }catch(InterruptedException e){}*/
-        }
+
         Map.readmat();
         initDisplay();
         initGL();  
@@ -72,22 +77,34 @@ public class Main{
         gameLoop();
         cleanUp();       
     }
-    
+
+    /**
+     * Inicia e instancia las clases necesarias. Rota la camara para que esté detrás del jugador
+     */
     private static void initGame(){
         cam = new Camera(70,(float) Display.getWidth() /(float)Display.getHeight(),0.3f,1000);
         cam.rotateX(-60f);
         game = new Game();
     }
-    
+
+    /**
+     * Obtiene los inputs del usuario
+     */
     private static void getInput(){
        game.getInput();
     }
-    
+
+    /**
+     * Actualiza las variables y la lógica del juego
+     */
     private static void update() {
        //game.recreate();
        game.update();
     }
-    
+
+    /**
+     * Dibuja los objetos en pantalla.
+     */
     private static void render(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glLoadIdentity();
@@ -96,9 +113,13 @@ public class Main{
         Display.update();
         Display.sync(60);
     }
-    
-    
-    //la imagen debe ser cuadrada y tener dimensiones de 2^n
+
+    /**
+     * Lee las texturas del juego
+     * la imagen debe ser cuadrada y tener dimensiones de 2^n
+     * @param key Nombre de la textura
+     * @return La textura cargada
+     */
     public static Texture loadTexture(String key){
         try {
             return TextureLoader.getTexture(".png", new FileInputStream(new File("res/" + key + ".png")));
@@ -108,10 +129,12 @@ public class Main{
         }
         return null;                
     }
-    
-    
+
+
+    /**
+     * Bucle principal del juego
+     */
     private static void gameLoop(){
-        //Camera cam = new Camera(70,(float) Display.getWidth() /(float)Display.getHeight(),0.3f,1000);
         
         while (!Display.isCloseRequested()) {        
             getInput();  
@@ -120,8 +143,10 @@ public class Main{
         }
     }
 
-            
-    
+
+    /**
+     * Inicia los componentes necesarios para trabajar en OpenGL
+     */
     private static void initGL(){
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
@@ -130,7 +155,10 @@ public class Main{
         glClearColor(0,0,0,1);
         glDisable(GL_DEPTH_TEST);
     }
-    
+
+    /**
+     * Limpia y destruye todos los componentes de OpenGL
+     */
     private static void cleanUp(){
         Display.destroy();
         Keyboard.destroy();
@@ -138,7 +166,10 @@ public class Main{
         game.task01.cancel();
         game.tim.purge();
     }
-    
+
+    /**
+     * Crea la ventana de OpenGL
+     */
     private static void initDisplay(){
         try {
             Display.setDisplayMode(new DisplayMode(672,672));
@@ -150,21 +181,34 @@ public class Main{
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }        
     }
-   
-    
+
+
+    /**
+     * Setea el estado de la ventana abierto o cerrado
+     * @param ab Estado, abierto o cerrado
+     */
     public static void setInterState(boolean ab)
     {
         abierto = ab; 
     }
-    
+
+    /**
+     * Crea el cliente que se encarga de las conexiones con el servidor
+     * @param ip IP a la que se conectará
+     * @param port Puerto del servidor
+     */
     public static void crearCLiente(String ip, Integer port)
     {
         cliente = new Client(port, ip);
         cliente.start();
     }
-    
-    public static void setColor(String clor){
-        color = clor;
+
+    /**
+     * Cambia el color
+     * @param color nuevo color
+     */
+    public static void setColor(String color){
+        color = color;
     } 
    
 }
