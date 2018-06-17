@@ -9,30 +9,57 @@ import java.util.TimerTask;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 
 /**
- *
- * @author Alexis
+ * Clase encargada de manejar la lógica del juego
  */
 
-public class Game {    
+public class Game {
+    /**
+     * Tamaño del mapa
+     */
     public static int size = Map.size;
+    /**
+     * Mapa de juego
+     */
     public static Map map = new Map();
-    public static Player player;
+    /**
+     * Jugador
+     */
+    public static Player player = new Player( "nombre1", 3, 143*size,(168-97)*size);
+    /**
+     * Jugadores del multijugador
+     */
     public static Player[] Jugadores = new Player[3];
-    
-    
-    
-    
+    /**
+     * Milis
+      */
     private int milis =0;
+    /**
+     * Lista de balas
+     */
     ListaDoble proyectiles =new ListaDoble();
-    
+    /**
+     * Elemento random
+     */
     Random randomx = new Random();
-    
+
+    /**
+     * Bandera
+     */
     private boolean bandera = true;
+    /**
+     * Bandera de disparos
+     */
     private boolean disparos = true;
+    /**
+     * Timer
+     */
     Timer tim=new Timer();
     //Torre t1;
     //ShootAimed s1;
-	
+
+    /**
+     * Thread de los disparos
+     */
     TimerTask task01=new TimerTask(){
         public void run(){
             milis++;    		
@@ -40,23 +67,30 @@ public class Game {
                     bandera = true; }                
         }                         
     };
-        
-    		
+
+
+    /**
+     * Inica el thread de disparos
+     */
     public void start(){
     	tim.schedule(task01, 1000,1);    	
     }
-    
-    
+
+
+    /**
+     * Constructor inicia el thread de los disparos e inicializa los clientes
+     */
     public Game(){        
     	this.start();
-        player = new Player( Main.color, 3, 143*size,(168-97)*size);
         Jugadores[0] = new Player ("nombre2", 3, 153*size , (168-100)*size);
         Jugadores[1] = new Player ("nombre3", 3, 143*size , (168-103)*size);
         Jugadores[2] = new Player ("nombre4", 3, 153*size , (168-106)*size);
     }
-        
 
-        
+
+    /**
+     * Obtiene el input del usuario
+      */
     public void getInput(){        
         if (Keyboard.isKeyDown(Keyboard.KEY_W) || (Keyboard.isKeyDown(Keyboard.KEY_UP)))
             player.moveY(1);
@@ -80,7 +114,10 @@ public class Game {
         }
                 
     }
-    
+
+    /**
+     * Actualiza los elementos y chequea colisiones
+     */
     public void update(){        
         player.update();      
         
@@ -100,7 +137,10 @@ public class Game {
         }
         
     }
-    
+
+    /**
+     * Dibuja todos los elementos en pantalla
+     */
     public void render(){
         //System.out.println(player.x + " + " + player.y);
         float vect = 40f;
@@ -116,9 +156,5 @@ public class Game {
         	  
         for (Player i : Jugadores)
             i.render();
-        
-        System.err.println(player.getName());
-      
-        	  
     }
 }
