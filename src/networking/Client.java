@@ -5,30 +5,68 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.Scanner;
 
 //IP CASA = "192.168.0.27"
 // IP TEC = "172.18.243.179"
 // IP APARTA = "192.168.100.22"
 
-public class Client extends Thread {	
-	
-	private String IP = "192.168.100.4";
+/**
+ * Clase encargada de la conexión con el servidor
+ */
+public class Client extends Thread {
+
+    /**
+     * IP del servidor
+     */
+    private String IP = "192.168.100.4";
+    /**
+     * Puerto del servidor
+     */
 	private Integer PORT = 16085;
+    /**
+     * Numero del jugador
+     */
 	private String number;
-        private String[] coloresDisp;
-	
-	private Socket socket;
+    /**
+     * Lista de colores disponibles
+     */
+    private String[] coloresDisp;
+
+    /**
+     * Socket
+     */
+    private Socket socket;
+    /**
+     * InputStreamReader
+     */
     private InputStreamReader inputStreamReader;
+    /**
+     * BufferedReader
+     */
     private BufferedReader bufferedReader;
+    /**
+     * PrintStream
+     */
 	private PrintStream printStream;
 
+    /**
+     * Mensaje del servidor
+     */
     private String message;
+    /**
+     * Matriz principal
+     */
     private String[][] matrix;
+    /**
+     * Si esta listo 
+     */
     private boolean ready = false;
-    private boolean listos = false;
-        
-    
+
+    /**
+     * Inicia las variables necesarias
+     * @param port Puerto del Servidor
+     * @param Ip IP del servidor
+     */
     public Client(Integer port, String Ip) {
     	try {
                 this.PORT = port;
@@ -39,20 +77,32 @@ public class Client extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    }  
-    
-        
+    }
+
+    /**
+     * Envia un mensaje al servidor
+     * @param sText Mensaje a enviar
+     */
     public void sendStringToServer(String sText) {
 		this.printStream.print(sText);		
 	}
-    
-    public synchronized String[][] msg() {
+
+    /**
+     * Devuelve la matriz de juego
+     * @return Matriz de juego
+     */
+	public synchronized String[][] msg() {
     	if (ready)
     		return matrix;
     	else
     		return null;
     }
-    
+
+    /**
+     * Procesa el input de servidor
+     * @param input Mensaje del servidor
+     * @return Mensaje procesado
+     */
     private String[] process_msg(String input) {
     	String[] result = input.split(",");
     	
@@ -61,15 +111,36 @@ public class Client extends Thread {
     	} else if (result[0].equalsIgnoreCase("turbo")) {
     		result[0] = "7";
     	}    	
-    	
-    	//System.out.println(result.toString());
+
     	return result;
-    }   
-        
+    }
+
+    /**
+     * Devuelde l número de jugador
+     * @return Número de jugador
+     */
     public String get_number() {
     	return number;
-    }       
+    }
 
+    /**
+     * Devuelve los colores disṕonibles
+     * @return Colores disponibles
+     */
+    public String[] getColors()
+    {
+        if(coloresDisp!= null){
+            return coloresDisp;
+        }
+        else{
+            String[] n = {"no"};
+            return n;
+        }
+    }
+
+    /**
+     * Thread que recibe y procesa los mensajes del servidor
+     */
     @Override
     public void run() {
         try {   
@@ -111,7 +182,6 @@ public class Client extends Thread {
                     } else if (message.startsWith("c")) {
                     	String[] colorSplit = message.split("");
                         this.coloresDisp = colorSplit;
-                        /*
                     	for (int k = 1; k < colorSplit.length; ++k)	{
                     		if (k != 0) {
                     			switch (colorSplit[k])
@@ -132,14 +202,11 @@ public class Client extends Thread {
                     				System.out.println("No quedan colores");
                     			}
                     		}
-                    	}*/
+                    	}
                     } 
                     else if (message.startsWith("k")) {
                     	System.out.println("Jugador " + split[1] + " ganó " + split[2] + " puntos");                   	
-                    }  else if (message.startsWith("i")) {
-                        this.listos = true;
-                    }                        
-                    else {
+                    } else {
                     	matrix[i] = message.split("");
                     	i++;
                     } 
@@ -157,19 +224,5 @@ public class Client extends Thread {
 				e.printStackTrace();
 			}	
         }        
-    }
-    public String[] getColors()
-    {
-        if(coloresDisp!= null){
-            return coloresDisp;
-        }
-        else{
-            String[] n = {"no"};
-            return n;
-        }
-    }
-    public boolean getReady()
-    {
-        return listos;
     }
 }
