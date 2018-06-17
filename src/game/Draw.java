@@ -55,57 +55,11 @@ public class Draw {
                 glVertex3f(0,0,1);
                 glVertex3f(0,height,1);
                 glVertex3f(width,height,1);
-                glVertex3f(width,0,1);       
+                glVertex3f(width,0,1);
+                
+                
             }
-            /*
-            {
-                glColor3f(1f, 0f, 0f);
-                    glVertex3f(-1, -1, 1);
-                    glVertex3f(1, -1, 1);
-                    glVertex3f(1, 1, 1);
-                    glVertex3f(-1, 1, 1);
-                    
-
-//BackFace
-                    glColor3f(0f, 1f, 0f);
-                    glVertex3f(-1, -1, -1);
-                    glVertex3f(-1, -1, -1);
-                    glVertex3f(1, 1, -1);
-                    glVertex3f(1, -1, -1);
-                   
-
-//BottomFace
-                    glColor3f(0f, 0f, 1f);
-                    glTexCoord2f(1, 1); glVertex3f(-1, -1, -1);
-                    glTexCoord2f(1, 0); glVertex3f(-1, -1, 1);
-                    glTexCoord2f(0, 0); glVertex3f(-1, 1, 1);
-                    glTexCoord2f(0, 1); glVertex3f(-1, 1, -1);
-                    
-
-//TopFace
-                    glColor3f(1f, 1f, 0f);
-                    glTexCoord2f(1, 1); glVertex3f(1, -1, -1);
-                    glTexCoord2f(1, 0);  glVertex3f(1, -1, 1);
-                    glTexCoord2f(0, 0); glVertex3f(1, 1, 1);
-                    glTexCoord2f(0, 1); glVertex3f(1, 1, -1);
-                    
-
-//LeftFace
-                    glColor3f(0f, 1f, 1f);
-                    glTexCoord2f(1, 1); glVertex3f(-1, -1, -1);                    
-                    glTexCoord2f(1, 0); glVertex3f(1, -1, -1);
-                    glTexCoord2f(0, 0); glVertex3f(1, -1, 1);
-                    glTexCoord2f(0, 1); glVertex3f(-1, -1, 1);
-                    
-
-//Right Face
-                    glColor3f(1f, 0f, 1f);
-                    glTexCoord2f(1, 1); glVertex3f(-1, 1, -1);                    
-                    glTexCoord2f(1, 0); glVertex3f(1, 1, -1);                    
-                    glTexCoord2f(0, 0); glVertex3f(1, 1, 1);
-                    glTexCoord2f(0, 1); glVertex3f(-1, 1, 1);
-            }
-            */
+           
 
             glEnd();
         }
@@ -117,11 +71,11 @@ public class Draw {
         glPushMatrix();
         {
             //red-green-blue
-            glColor3f(red,green,blue);
+            //glColor3f(red,green,blue);
             glTranslatef(x,y,0);
             glRotatef(rot,0,0,1);
             glBegin(GL_QUADS);
-            {
+            /*{
                 
                 glColor3f(0,0,1);                
                 glVertex3f(0,0,1);
@@ -136,10 +90,138 @@ public class Draw {
                 glVertex3f(width,0,5);  
                 
             }
+             */
+            {
+//front face
+                    glColor3f(red, green, blue);
+                    glVertex3f(0, height+3, 1);
+                    glVertex3f(0, height+3, 5);
+                    glVertex3f(width,height+3, 5);
+                    glVertex3f(width, height+3, 1);
+                    
+
+//BackFace
+                    glColor3f(red, green, blue);
+                    glVertex3f(0, 0, 1);
+                    glVertex3f(0, 0, 5);
+                    glVertex3f(width,0, 5);
+                    glVertex3f(width, 0, 1);
+                   
+
+//BottomFace
+                    glColor3f(red,green,blue);                
+                    glVertex3f(0,0,1);
+                    glVertex3f(0,height+3,1);
+                    glVertex3f(width,height+3,1);
+                    glVertex3f(width,0,1);  
+                    
+
+//TopFace
+                    glColor3f(red, green,blue);
+                    glVertex3f(0,0,5);
+                    glVertex3f(0,height+3,5);
+                    glVertex3f(width,height+3,5);
+                    glVertex3f(width,0,5); 
+                    
+
+//LeftFace
+                    glColor3f(red, green, blue);
+                    glVertex3f(0, 0, 1);                    
+                    glVertex3f(0, 0, 5);
+                    glVertex3f(0,height+3, 5);
+                    glVertex3f(0, height+3, 1);
+                    
+
+//Right Face
+                    glColor3f(red, green, blue);
+                    glVertex3f(width, 0, 1);                    
+                    glVertex3f(width, 0, 5);                    
+                    glVertex3f(width,height+3, 5);
+                    glVertex3f(width, height+3, 1);
+            }
+            
 
             glEnd();
         }
         glPopMatrix();
+    }
+    public static void drawBullet(float x, float y, float width, float height,float rot){
+        glPushMatrix();
+        {
+            //red-green-blue
+            glTranslatef(x,y,0);
+            glRotatef(rot,0,0,1);
+            glBegin(GL_QUADS);
+            /*{
+                
+                glColor3f(0,0,1);                
+                glVertex3f(0,0,1);
+                glVertex3f(0,height,1);
+                glVertex3f(width,height,1);
+                glVertex3f(width,0,1);   
+                
+                glColor3f(1, 0,0);
+                glVertex3f(0,0,5);
+                glVertex3f(0,height,5);
+                glVertex3f(width,height,5);
+                glVertex3f(width,0,5);  
+                
+            }
+             */
+            {
+//front face
+                    glColor3f(0, 0, 0);
+                    glVertex3f(0, height, 2);
+                    glVertex3f(0, height, 3);
+                    glVertex3f(width,height, 3);
+                    glVertex3f(width, height, 3);
+                    
+
+//BackFace
+                    glColor3f(0, 0, 0);
+                    glVertex3f(0, 0, 2);
+                    glVertex3f(0, 0, 2);
+                    glVertex3f(width,0, 3);
+                    glVertex3f(width, 0, 2);
+                   
+
+//BottomFace
+                    glColor3f(0,0,0);                
+                    glVertex3f(0,0,2);
+                    glVertex3f(0,height,2);
+                    glVertex3f(width,height,2);
+                    glVertex3f(width,0,2);  
+                    
+
+//TopFace
+                    glColor3f(0, 0,0);
+                    glVertex3f(0,0,3);
+                    glVertex3f(0,height,3);
+                    glVertex3f(width,height,3);
+                    glVertex3f(width,0,3); 
+                    
+
+//LeftFace
+                    glColor3f(0, 0, 0);
+                    glVertex3f(0, 0, 2);                    
+                    glVertex3f(0, 0, 3);
+                    glVertex3f(0,height, 3);
+                    glVertex3f(0, height, 2);
+                    
+
+//Right Face
+                    glColor3f(0, 0, 0);
+                    glVertex3f(width, 0, 2);                    
+                    glVertex3f(width, 0, 3);                    
+                    glVertex3f(width,height, 3);
+                    glVertex3f(width, height, 2);
+            }
+            
+
+            glEnd();
+        }
+        glPopMatrix();
+        
     }
     
     

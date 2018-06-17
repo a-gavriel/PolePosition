@@ -9,7 +9,7 @@ public class Player extends GameObject {
     private static final int SIZEY = 4;
     private static final int SIZEX = 4;
     private static float Acceleration = 0.04f;
-    private static float MaxSpeed = 2.5f;
+    private static float MaxSpeed = 2.8f;
     private float SPEED = 0;
     private boolean hearts = true;
     private int Matx;
@@ -29,7 +29,7 @@ public class Player extends GameObject {
     @Override
     public void update(){
         if(hearts){
-                Matx = (int) x/Map.size;
+            Matx = (int) x/Map.size;
             Maty = (int) (Map.matriz.length - y/Map.size);
 
 
@@ -40,7 +40,7 @@ public class Player extends GameObject {
                 SPEED = 0.5f;
 
 
-            SPEED -= 0.02f;
+            SPEED -= 0.03f;
             if(SPEED >= MaxSpeed)
                 SPEED -= Acceleration;
 

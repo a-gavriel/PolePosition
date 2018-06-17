@@ -16,7 +16,7 @@ import static org.lwjgl.opengl.GL11.glTranslatef;
 public class Game {    
     public static int size = Map.size;
     public static Map map = new Map();
-    public static Player player = new Player( "nombre", 3, 150*size,(168-100)*size);
+    public static Player player = new Player( "nombre", 3, 143*size,(168-97)*size);
     public static ListaDoble JugadoresE = new ListaDoble();
     
     private int milis =0;
@@ -47,7 +47,7 @@ public class Game {
     public Game(){        
     	this.start();
         
-        int yy = 0;
+        int yy = 100;
         for (int i = 0; i < 3  ; ++i){
             Player Nuevo;
             if (i%2 ==1)

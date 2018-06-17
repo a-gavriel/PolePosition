@@ -6,7 +6,7 @@ public class Shoot extends GameObject
 {
     private static final int SIZEX = 2;
     private static final int SIZEY = 2;
-    private static final float SPEED = 10f;
+    private static final float SPEED = 11f;
     private String type;
     private int dmg;
     
@@ -38,8 +38,7 @@ public class Shoot extends GameObject
     }
     @Override
     public void render(){
-        
-        Draw.cube(x,y,sx,sy, rot,0,0,0);
+        Draw.drawBullet(x,y,sx/2,sy/2, rot);
     }
     
 }
