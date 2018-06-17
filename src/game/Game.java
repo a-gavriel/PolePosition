@@ -49,7 +49,7 @@ public class Game {
     
     public Game(){        
     	this.start();
-        player = new Player( "nombre1", 3, 143*size,(168-97)*size, Main.color);
+        player = new Player( "nombre1", 3, 143*size,(168-97)*size);
         Jugadores[0] = new Player ("nombre2", 3, 153*size , (168-100)*size);
         Jugadores[1] = new Player ("nombre3", 3, 143*size , (168-103)*size);
         Jugadores[2] = new Player ("nombre4", 3, 153*size , (168-106)*size);

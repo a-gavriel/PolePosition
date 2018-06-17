@@ -60,11 +60,11 @@ public class Main{
         cliente.sendStringToServer("r,"+cliente.get_number());
         while(!cliente.getReady()){
             System.out.println("Esperando Conexiónes...");
-            /*try{
-                //Thread.sleep(100);
-                
-            }catch(InterruptedException e){}*/
+
+            
         }
+       
+        color = "4";
         Map.readmat();
         initDisplay();
         initGL();  
