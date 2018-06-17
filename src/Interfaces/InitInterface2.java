@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Interfaces;
 import game.Main;
 /**
  *
- * @author Crisptofer
+ * Clase encargada de mostrar los colores disponibles
  */
 
 public class InitInterface2 extends javax.swing.JFrame {
