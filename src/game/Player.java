@@ -16,6 +16,17 @@ public class Player extends GameObject {
     private int Maty;
     private float angle = 90 ;
     private String name;
+    private String color;
+    
+    
+    public Player(String nombre,  int ammo, float x, float y, String color) {
+        this.color = color;
+        this.name = nombre;
+        this.x = x;
+        this.y = y;
+        this.sx = SIZEX;
+        this.sy = SIZEY;
+    }
     
     public Player(String nombre,  int ammo, float x, float y) {
         this.name = nombre;
@@ -24,9 +35,7 @@ public class Player extends GameObject {
         this.sx = SIZEX;
         this.sy = SIZEY;
     }
-
-    
-    
+     
     @Override
     public void update(){
         if(hearts){
@@ -69,7 +78,21 @@ public class Player extends GameObject {
     }    
     @Override
     public void render(){
-        Draw.cube(x,y,sx,sy,angle-90,0,0,0);
+        switch(this.color){
+            case "1": 
+                Draw.cube(x,y,sx,sy,angle-90,1,0,0);
+                break;
+            case "2":
+                Draw.cube(x,y,sx,sy,angle-90,0,1,0);
+                break;
+            case"3":
+                Draw.cube(x,y,sx,sy,angle-90,0,0,1);
+                break;
+            case "4":
+                Draw.cube(x,y,sx,sy,angle-90,0.7f,0,0.7f);
+                break;
+        }
+        
     }
   
     public void moveY(float mag){

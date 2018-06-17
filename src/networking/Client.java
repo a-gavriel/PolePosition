@@ -26,7 +26,8 @@ public class Client extends Thread {
     private String message;
     private String[][] matrix;
     private boolean ready = false;
-	private static Scanner scanner;
+    private boolean listos = false;
+        
     
     public Client(Integer port, String Ip) {
     	try {
@@ -110,6 +111,7 @@ public class Client extends Thread {
                     } else if (message.startsWith("c")) {
                     	String[] colorSplit = message.split("");
                         this.coloresDisp = colorSplit;
+                        /*
                     	for (int k = 1; k < colorSplit.length; ++k)	{
                     		if (k != 0) {
                     			switch (colorSplit[k])
@@ -130,11 +132,14 @@ public class Client extends Thread {
                     				System.out.println("No quedan colores");
                     			}
                     		}
-                    	}
+                    	}*/
                     } 
                     else if (message.startsWith("k")) {
                     	System.out.println("Jugador " + split[1] + " ganó " + split[2] + " puntos");                   	
-                    } else {
+                    }  else if (message.startsWith("i")) {
+                        this.listos = true;
+                    }                        
+                    else {
                     	matrix[i] = message.split("");
                     	i++;
                     } 
@@ -162,5 +167,9 @@ public class Client extends Thread {
             String[] n = {"no"};
             return n;
         }
+    }
+    public boolean getReady()
+    {
+        return listos;
     }
 }

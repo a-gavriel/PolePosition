@@ -16,7 +16,7 @@ import static org.lwjgl.opengl.GL11.glTranslatef;
 public class Game {    
     public static int size = Map.size;
     public static Map map = new Map();
-    public static Player player = new Player( "nombre1", 3, 143*size,(168-97)*size);
+    public static Player player;
     public static Player[] Jugadores = new Player[3];
     
     
@@ -49,6 +49,7 @@ public class Game {
     
     public Game(){        
     	this.start();
+        player = new Player( "nombre1", 3, 143*size,(168-97)*size, Main.color);
         Jugadores[0] = new Player ("nombre2", 3, 153*size , (168-100)*size);
         Jugadores[1] = new Player ("nombre3", 3, 143*size , (168-103)*size);
         Jugadores[2] = new Player ("nombre4", 3, 153*size , (168-106)*size);

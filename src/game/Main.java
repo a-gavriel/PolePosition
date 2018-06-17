@@ -34,7 +34,7 @@ public class Main{
     private static Object gl;
     public static Camera cam;
     private static boolean abierto;
-    private static String color;
+    public static String color;
     public static Client cliente;
     
     //
@@ -57,7 +57,14 @@ public class Main{
         }
         System.out.print(color);
         cliente.sendStringToServer("c,"+color);
-
+        cliente.sendStringToServer("r,"+cliente.get_number());
+        while(!cliente.getReady()){
+            System.out.println("Esperando Conexiónes...");
+            /*try{
+                //Thread.sleep(100);
+                
+            }catch(InterruptedException e){}*/
+        }
         Map.readmat();
         initDisplay();
         initGL();  
