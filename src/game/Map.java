@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game;
 
 import java.io.BufferedReader;
@@ -18,15 +13,18 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
 /**
- *
- * @author Alexis
+ * Clase encargada de cargar y modificar el mapa
  */
 public class Map {
     
     public static int size = 4;
     public static int[][] matriz = new int[168][168];
-    
-    
+
+
+    /**
+     * Recorre y muestra en consola el mapa
+     * @param list lista a mostrar
+     */
     public static void printlist(int list[]){
         int l = matriz.length;
         String st = "";
@@ -38,7 +36,11 @@ public class Map {
         
         System.out.println(st);
     }
-    
+
+    /**
+     * Recorre y muestra en consola el mapa
+     * @param mat matriz a mostrar
+     */
     public static void printmat(int [][] mat){
         int l = mat.length;
         String st = "";
@@ -51,7 +53,12 @@ public class Map {
         }
         System.out.println(st);
     }
-    
+
+    /**
+     * Carga la textura
+     * @param key nombre del archivo
+     * @return textura cargada
+     */
     public static Texture loadTexture(String key) {
         try {
             return TextureLoader.getTexture("png", new FileInputStream(new File("res/" + key + ".png")));
@@ -61,21 +68,17 @@ public class Map {
 
         return null;
     }
-    
-    
-    public static void readmat(){
-        // The name of the file to open.
+
+
+    /**
+     * Lee y carga el mapa en la matriz principal
+     */
+    public static void readmat() {
         String fileName = "map.txt";
-        // This will reference one line at a time
         String line = null;
         try {
-            // FileReader reads text files in the default encoding.
-            FileReader fileReader = 
-                new FileReader(fileName);
-
-            // Always wrap FileReader in BufferedReader.
-            BufferedReader bufferedReader = 
-                new BufferedReader(fileReader);
+            FileReader fileReader = new FileReader(fileName);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             int i = 0;
             while((line = bufferedReader.readLine()) != null) {
@@ -86,30 +89,22 @@ public class Map {
                 }
                 i+=1;
             }
-            System.out.println("Matrix Read");            
-            //printmat();
-            //printlist(matriz[35]);
-            // Always close files.
+            System.out.println("Matrix Read");
             bufferedReader.close();         
         }
         catch(FileNotFoundException ex) {
-            System.out.println(
-                "Unable to open file '" + 
-                fileName + "'");                
+            System.out.println( "Unable to open file '" + fileName + "'");
         }
         catch(IOException ex) {
-            System.out.println(
-                "Error reading file '" 
-                + fileName + "'");                  
-            // Or we could just do this: 
-            // ex.printStackTrace();
+            System.out.println("Error reading file '" + fileName + "'");
         }
     
     }
-    
-    
-    public void render(){        
-        //printmat();
+
+    /**
+     * Recorre y dibuja los elementos de la matriz
+      */
+    public void render(){
         int z = matriz.length;
         
         /// bloques 5 7 y 9 están sin utilizar (huecos, vidas, turbos)
@@ -146,7 +141,7 @@ public class Map {
                 
             }
             /*
-            for (int j = 0; j < z; ++j){               
+            for (int j = 0; j < z; ++j){
                 if (matriz[i][j] == 0 ){
                     Draw.rect(j*size,(z-i)*size,j*size+size,(z-i)*size+size);
                 }
@@ -155,18 +150,17 @@ public class Map {
         }
     }
 
+    /**
+     * Dibuja al jugador en el mapa
+     * @param pl jugador a dibujar
+     */
     public void render(Player pl){        
         //printmat();
         int x = pl.getMatx();
         int y = pl.getMaty();
-        
-   
         int sizeW = Display.getWidth() /5;
-        int sizeH = Display.getHeight() /5;
-        
-        
-        
-        
+        int sizeH = Display.getHeight() /5;       
+                
         String sb = "";
         int ijmat1 = 0;
         
@@ -177,9 +171,6 @@ public class Map {
             }
             sb+=("\n");
         }
-        //System.out.println("--+++----");
-        //System.out.println(sb);
-        //System.out.println("---------");
         
         int z = matriz.length;
         /// bloques 5 7 y 9 están sin utilizar (huecos, vidas, turbos)
@@ -230,8 +221,5 @@ public class Map {
             }
             */
         }
-    }    
-    
-    
-    
+    }      
 }
