@@ -31,7 +31,17 @@ public class Client extends Thread {
      * Lista de colores disponibles
      */
     private String[] coloresDisp;
-
+	
+    /**
+         * Mensaje lista recibido del movimiento de un jugador
+         */
+        private String[] movimientoJugadores;
+	
+        /**
+         * Mensaje lista de cuales son los jugadores activos
+         */
+        private String[] jugadoresActivos = new String[4]; 
+	
     /**
      * Socket
      */
@@ -123,6 +133,28 @@ public class Client extends Thread {
     	return number;
     }
 
+	    /**
+     * 
+     * @return Lista String del mensaje del moviento de algun jugador
+     */
+    public String[] obtenerMovimientoJugadores() {
+        if (ready)
+            return movimientoJugadores;
+        else 
+            return null;
+
+    }
+    
+    /**
+     * 
+     * @return Lista String del mensaje de cuantos jugadores hay activos
+     */
+    public String[] obtenerJugadoresActivos() {
+        return jugadoresActivos;
+    }
+
+	
+	
     /**
      * Devuelve los colores disṕonibles
      * @return Colores disponibles
@@ -163,15 +195,18 @@ public class Client extends Thread {
                     } else if (message.startsWith("h") || message.startsWith("t")){
                     	ready = true;
                     	String[] splitM = process_msg(message);                    	
-                    	matrix[Integer.parseInt(splitM[1])][Integer.parseInt(splitM[2])] = splitM[0];
+                    	Map.matriz[Integer.parseInt(splitM[1])][Integer.parseInt(splitM[2])] = Integer.parseInt(splitM[0]);
                     	
                     } else if(message.startsWith("d")) {
                     	ready = true;
-                    	System.out.println("Jugador " + split[1] + ", disparó al jugador " + split[2]); 
-                    	
+                    	if (split[2].equals(Main.cliente.get_number())){
+                            Game.player.setHeart(false);
+			    System.out.println("Me mataron :(");
+                            Game.player.getHeart();
+			}
                     } else if (message.startsWith("m")) {
                     	ready = true;    
-                    	System.out.println("Jugador " + split[1] + ", esta en la posicion " + split[2] + ", " + split[3]);
+                    	movimientoJugadores = split;
                     	
                     } else if (message.startsWith("g")) {
                     	System.out.println("Jugador " + split[1] + " ganó");
@@ -182,47 +217,52 @@ public class Client extends Thread {
                     } else if (message.startsWith("c")) {
                     	String[] colorSplit = message.split("");
                         this.coloresDisp = colorSplit;
-                    	for (int k = 1; k < colorSplit.length; ++k)	{
-                    		if (k != 0) {
-                    			switch (colorSplit[k])
-                    			{
-                    			case "1":
-                    				System.out.println("Queda el color azul");
-                    				break;
-                    			case "2":
-                    				System.out.println("Queda el color verde");
-                    				break;
-                    			case "3":
-                    				System.out.println("Queda el color rojo");
-                    				break;
-                    			case "4":
-                    				System.out.println("Queda el color amarillo");
-                    				break;
-                    			default:
-                    				System.out.println("No quedan colores");
-                    			}
-                    		}
-                    	}
+                     
                     } 
                     else if (message.startsWith("k")) {
                     	System.out.println("Jugador " + split[1] + " ganó " + split[2] + " puntos");                   	
-                    } else {
-                    	matrix[i] = message.split("");
-                    	i++;
-                    } 
-                }             
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally  {
-        	try {
-				inputStreamReader.close();
-				bufferedReader.close();
-				socket.close();	
-				Thread.currentThread().interrupt();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}	
-        }        
-    }
-}
+                    }  else if (message.startsWith("i")) {
+                        ready = true;
+                        this.listos = true;
+                    }
+                    else if(message.startsWith("e")){
+                        String[] arrayt = message.split("");
+                        jugadoresActivos[0] = arrayt[1];
+                        jugadoresActivos[1] = arrayt[2];
+                        jugadoresActivos[2] = arrayt[3];
+                        jugadoresActivos[3] = arrayt[4];
+			    }
+			    else {
+				matrix[i] = message.split("");
+				i++;
+			    } 
+			}             
+		    }
+		} catch (Exception e) {
+		    e.printStackTrace();
+		} finally  {
+			try {
+					inputStreamReader.close();
+					bufferedReader.close();
+					socket.close();	
+					Thread.currentThread().interrupt();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}	
+		}        
+	    }
+	    public String[] getColors()
+	    {
+		if(coloresDisp!= null){
+		    return coloresDisp;
+		}
+		else{
+		    String[] n = {"no"};
+		    return n;
+		}
+	    }
+	    public boolean getReady()
+	    {
+		return listos;
+	    }
+	}
