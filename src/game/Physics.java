@@ -8,10 +8,17 @@ package game;
 import java.awt.Rectangle;
 
 /**
- *
+ * Revisa colisiones entre objetos
  * @author Alexis
  */
 public class Physics {
+    
+    /**
+     * Revisa colisiones entre los objetos rectangulares go1 y go2
+     * @param go1
+     * @param go2
+     * @return 
+     */
     public static boolean checkCollisions(GameObject go1, GameObject go2)
     {
         Rectangle r1 = new Rectangle((int)go1.getX(),(int)go1.getY(),(int)go1.getSX(),(int)go1.getSY());
@@ -21,11 +28,13 @@ public class Physics {
     }
     
     
+    /**
+     * Revisa si un vértice de go2 está dentro de go1
+     * @param go1
+     * @param go2
+     * @return true/false
+     */
     public static boolean checkIntersect(GameObject go1, GameObject go2){
-        //p1 =   X   , Y
-        //p2 =   X+sx, Y
-        //p3 =   X+sx,Y+sy
-        //p4 =   X   , sy
         float X1 = go1.getX();
         float X2 = X1 + go1.getSX();
         float Y1 = go1.getY();
@@ -56,16 +65,28 @@ public class Physics {
             return false;
     }
     
-    
+    /**
+     * Revisa si algún GameObject del array colisiona con go
+     * @param go
+     * @param array
+     * @return el índice del objeto con el que colisionó, o -1 si ninguno
+     */
     public static int checkwithArray (GameObject go, GameObject[] array){
-        for (int i =0; i<3 ; ++i)
+        for (int i =0; i< 4 ; ++i)
             if (checkCollisions(go, array[i])){
                 System.out.println("killed: "+ i);
+                Main.cliente.sendStringToServer("d,"+Main.cliente.get_number().trim()+"," + (i+1)+",");
                 return i;                
             }
-        return 0;
+        return -1;
     }
     
+    /**
+     * Revisa si algún GameObject de la lista doble colisiona con go
+     * @param go
+     * @param lista
+     * @return true/false
+     */
     public static boolean checkwithListaDoble (GameObject go, ListaDoble lista )
     {
         NodoDoble current = lista.getHead();
@@ -82,16 +103,5 @@ public class Physics {
         return false;
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 }
