@@ -80,6 +80,9 @@ public class Player extends GameObject {
 
             if (Map.matriz[Maty][Matx] == 7)
                 SPEED = 0.5f;
+            
+            if (Map.matriz[Maty][Matx] == 9)
+                Main.cliente.sendStringToServer("g," + Main.cliente.get_number());
 
 
             SPEED -= 0.03f;
@@ -87,6 +90,9 @@ public class Player extends GameObject {
                 SPEED -= Acceleration;
 
             if (Map.matriz[Maty][Matx] == 5)
+                SPEED = 0;
+            
+            if (Map.matriz[Maty][Matx] == 7)
                 SPEED = 1.5f*MaxSpeed;
 
             if(SPEED >= 0){
@@ -134,19 +140,22 @@ public class Player extends GameObject {
      * @param mag Cuanto se moverá
      */
     public void moveY(float mag){
-        if (mag > 0)
-            if (y < ((Display.getHeight() )- this.sy * 1.2)){
-                SPEED+=Acceleration;
-                if(SPEED >= MaxSpeed)
-                    SPEED = MaxSpeed;
-                
-                y += SPEED * mag * Math.sin(Math.toRadians(angle));
-                x += SPEED * Math.cos(Math.toRadians(angle));
+        if (hearts){
+            if (mag > 0){
+                if (y < ((Display.getHeight() )- this.sy * 1.2)){
+                    SPEED+=Acceleration;
+                    if(SPEED >= MaxSpeed)
+                        SPEED = MaxSpeed;
+
+                    y += SPEED * mag * Math.sin(Math.toRadians(angle));
+                    x += SPEED * Math.cos(Math.toRadians(angle));
+                }
             }
-        if (mag <0)
-            if (y>0){
-                SPEED-=Acceleration;
-            }
+            if (mag <0)
+                if (y>0){
+                    SPEED-=Acceleration;
+                }
+        }
     }
 
     /**
@@ -184,6 +193,14 @@ public class Player extends GameObject {
     }
 
     /**
+     * Set Vidas 
+     * @param H 
+     */
+    public void setHeart(boolean H){
+        hearts = H;
+    }
+    
+    /**
      * Retorna las vidas del jugador
      * @return Vidas del jugador
      */
@@ -198,17 +215,15 @@ public class Player extends GameObject {
     public String getName(){
         return name;
     }
+    
+    /**
+     * Nuevo nombre
+     * @param name 
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    
+    
 }    
-        
-        
-        
-
-
-
-
-        
-        
-        
-        
-
-
