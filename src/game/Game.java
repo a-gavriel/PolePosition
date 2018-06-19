@@ -28,7 +28,7 @@ public class Game {
     /**
      * Jugadores del multijugador
      */
-    public static Player[] Jugadores = new Player[3];
+    public static Player[] Jugadores = new Player[4];
     /**
      * Milis
       */
@@ -72,8 +72,8 @@ public class Game {
     /**
      * Inica el thread de disparos
      */
-    public void start(){
-    	tim.schedule(task01, 1000,1);    	
+    public void startTimer(){
+    	tim.schedule(task01, 1000,1);        
     }
 
 
@@ -81,10 +81,17 @@ public class Game {
      * Constructor inicia el thread de los disparos e inicializa los clientes
      */
     public Game(){        
-    	this.start();
-        Jugadores[0] = new Player ("nombre2", 3, 153*size , (168-100)*size);
-        Jugadores[1] = new Player ("nombre3", 3, 143*size , (168-103)*size);
-        Jugadores[2] = new Player ("nombre4", 3, 153*size , (168-106)*size);
+    	this.startTimer();
+        //player = new Player( Main.color, 3, 143*size,(168-97)*size);
+        Jugadores[0] = new Player ("1", 3, 143*size , (168-97)*size);
+        Jugadores[1] = new Player ("2", 3, 153*size , (168-100)*size);
+        Jugadores[2] = new Player ("3", 3, 143*size , (168-103)*size); 
+        Jugadores[3] = new Player ("4", 3, 153*size , (168-106)*size);  
+        int temp = Integer.parseInt(Main.cliente.get_number().trim())-1;
+        player = Jugadores[temp];
+        //System.out.println(Main.cliente.get_number());
+        //int temp = Integer.parseInt(Main.cliente.get_number().trim()) - 1;
+        //Jugadores[temp] = new Player( Main.color, 3, 143*size,(168-97)*size);
     }
 
 
@@ -102,7 +109,9 @@ public class Game {
             player.moveX(1);       
         if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)){         	
         	if( bandera ) {
+                   
                     if(player.getHeart()){
+                        
                         //Shoot disparo;
                         Shoot disparo = new Shoot(player.getX()+player.getSX()/2*((float)Math.cos(Math.toRadians(player.getAngle()-90))),
                                 player.getY()+player.getSY()/2*((float)Math.sin(Math.toRadians(player.getAngle()-90))),
@@ -121,15 +130,16 @@ public class Game {
     public void update(){        
         player.update();      
         
-        for (Player i : Jugadores)
-            i.update();
+        for (int i = 0; i< 4 ; ++i)
+            if (i != Integer.parseInt(Main.cliente.get_number().trim()) -1)
+                Jugadores[i].update();
         
         if( proyectiles.getSize() != 0){
         	proyectiles.Updateall();
                 
                 NodoDoble current =  proyectiles.getHead();
         	while (current != null){
-                    if ((Physics.checkwithArray(current.getData(), Jugadores)) != 0)
+                    if ((Physics.checkwithArray(current.getData(), Jugadores)) != -1)
                         proyectiles.delete(current);
                     current = current.getNext();
                 }      
@@ -154,7 +164,36 @@ public class Game {
         if( proyectiles != null)
             proyectiles.Renderall();
         	  
-        for (Player i : Jugadores)
-            i.render();
+        for (int i = 0; i< 4 ; ++i)
+            if (i != Integer.parseInt(Main.cliente.get_number().trim()) -1)
+                Jugadores[i].render();
+    }
+    
+    
+    /**
+     * Funcion para mover los jugadores externos cuando se recibe información del servidor
+     */
+    @Override
+    public void run(){
+        while(true){
+            try{
+                Thread.sleep(100);
+                Main.cliente.sendStringToServer("m,"+Main.cliente.get_number().trim()+","+player.getMatx()+","+player.getMaty()+",");
+                
+                if (Main.cliente.obtenerMovimientoJugadores() != null) {
+                    System.err.println(Main.cliente.obtenerMovimientoJugadores());
+                    if (!Main.cliente.obtenerMovimientoJugadores()[1].equals(Main.cliente.getName())) {
+                        int temp = Integer.parseInt(Main.cliente.obtenerMovimientoJugadores()[1]) - 1;
+                        Jugadores[temp].y = Float.parseFloat(Main.cliente.obtenerMovimientoJugadores()[2]);
+                        Jugadores[temp].x = Float.parseFloat(Main.cliente.obtenerMovimientoJugadores()[3]);
+                    }
+                }
+                
+                
+            }catch(InterruptedException e){}
+        
+            
+        }
+        
     }
 }
